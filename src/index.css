@@ -1,0 +1,138 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   BASE
+   ============================================================ */
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  * {
+    @apply border-white/5;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-base font-sans text-slate-300 antialiased;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Headings default to bright text */
+  h1, h2, h3, h4 {
+    @apply text-slate-50;
+  }
+
+  ::selection {
+    background-color: rgba(0, 212, 255, 0.25);
+    color: #e2f8ff;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #0a0f1e;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #16213c;
+    border-radius: 9999px;
+    border: 2px solid #0a0f1e;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #1e2c4f;
+  }
+}
+
+/* ============================================================
+   COMPONENT UTILITIES
+   ============================================================ */
+@layer components {
+  /* Frosted dark card */
+  .card {
+    @apply rounded-xl border border-white/10 bg-base-200/60 backdrop-blur-sm transition-all duration-300;
+  }
+
+  /* Cyan glow text */
+  .text-glow {
+    text-shadow: 0 0 18px rgba(0, 212, 255, 0.55);
+  }
+
+  .text-glow-green {
+    text-shadow: 0 0 16px rgba(34, 197, 94, 0.7);
+  }
+
+  /* Subtle dotted/line grid background */
+  .grid-bg {
+    background-image:
+      linear-gradient(to right, rgba(0, 212, 255, 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(0, 212, 255, 0.05) 1px, transparent 1px);
+    background-size: 44px 44px;
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 40%, transparent 100%);
+    -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 40%, transparent 100%);
+  }
+
+  /* Active nav link (react-scroll activeClass) */
+  .nav-active {
+    @apply text-accent;
+  }
+  .nav-active::after {
+    width: 100% !important;
+  }
+}
+
+/* ============================================================
+   KEYFRAMES — orbiting hero icons (uses per-element CSS vars)
+   ============================================================ */
+.orbit-item {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -22px;
+  margin-left: -22px;
+  animation-name: orbit;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  will-change: transform;
+}
+
+.orbit-item.reverse {
+  animation-name: orbit-reverse;
+}
+
+@keyframes orbit {
+  from {
+    transform: rotate(0deg) translateX(var(--orbit-radius)) rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg) translateX(var(--orbit-radius)) rotate(-360deg);
+  }
+}
+
+@keyframes orbit-reverse {
+  from {
+    transform: rotate(360deg) translateX(var(--orbit-radius)) rotate(-360deg);
+  }
+  to {
+    transform: rotate(0deg) translateX(var(--orbit-radius)) rotate(0deg);
+  }
+}
+
+/* Respect users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .orbit-item {
+    animation: none !important;
+    display: none;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
