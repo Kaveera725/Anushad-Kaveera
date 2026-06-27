@@ -18,6 +18,7 @@
 // ============================================================
 
 import Navbar from './components/Navbar';
+import DevOpsBackground from './components/DevOpsBackground';
 import Hero from './components/Hero';
 import About from './components/About';
 import Skills from './components/Skills';
@@ -30,7 +31,10 @@ import Footer from './components/Footer';
 export default function App() {
   return (
     <div className="relative min-h-screen overflow-x-hidden bg-base text-slate-300 selection:bg-accent/25">
-      {/* Global ambient background glow */}
+      {/* Animated DevOps "code rain" — sits furthest back */}
+      <DevOpsBackground />
+
+      {/* Global ambient background glow — layered over the rain to soften it */}
       <div className="pointer-events-none fixed inset-0 -z-10">
         <div className="absolute left-1/4 top-0 h-[480px] w-[480px] rounded-full bg-accent/5 blur-[140px]" />
         <div className="absolute bottom-0 right-0 h-[420px] w-[420px] rounded-full bg-brand-purple/5 blur-[140px]" />
