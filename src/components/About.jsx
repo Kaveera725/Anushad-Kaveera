@@ -1,39 +1,9 @@
-import { useEffect, useRef, useState } from 'react';
-import { motion, useInView } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Cpu, Cloud, GitBranch } from 'lucide-react';
 import SectionHeading from './SectionHeading';
+import CountUp from './CountUp';
 import { about, personal } from '../data/portfolio';
 import { fadeUp, stagger, viewportOnce } from '../lib/motion';
-
-/* Counts up to `to` once scrolled into view. */
-function CountUp({ to, suffix = '', duration = 1500 }) {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: '-60px' });
-  const [value, setValue] = useState(0);
-
-  useEffect(() => {
-    if (!inView) return;
-    let raf;
-    let start;
-    const tick = (t) => {
-      if (start === undefined) start = t;
-      const progress = Math.min((t - start) / duration, 1);
-      // easeOutCubic
-      const eased = 1 - Math.pow(1 - progress, 3);
-      setValue(Math.round(eased * to));
-      if (progress < 1) raf = requestAnimationFrame(tick);
-    };
-    raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
-  }, [inView, to, duration]);
-
-  return (
-    <span ref={ref}>
-      {value}
-      {suffix}
-    </span>
-  );
-}
 
 const statIcons = [Cpu, GitBranch, Cloud];
 

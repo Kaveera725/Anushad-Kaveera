@@ -85,6 +85,14 @@ export const about = {
   ],
 };
 
+// ----- Hero stats bar ---------------------------------------------
+// Compact counters shown under the hero CTAs (count up on scroll into view).
+export const heroStats = [
+  { value: 40, suffix: '%', label: 'Faster Deployments' },
+  { value: 6, suffix: '+', label: 'Projects Deployed' },
+  { value: 10, suffix: '+', label: 'Certifications' },
+];
+
 // ----- Skills -----------------------------------------------------
 // `icon` strings map to lucide-react components in Skills.jsx.
 export const skillCategories = [
@@ -215,6 +223,18 @@ export const experience = [
       'Performed network troubleshooting: DNS, firewall rules, and port configuration.',
       'Collaborated with dev teams to optimize MySQL and MongoDB queries.',
     ],
+    tags: [
+      'GitHub Actions',
+      'Jenkins',
+      'Docker',
+      'Terraform',
+      'AWS',
+      'Nginx',
+      'Prometheus',
+      'Grafana',
+      'MySQL',
+      'MongoDB',
+    ],
   },
 ];
 
@@ -233,6 +253,7 @@ export const projects = [
     tags: ['AWS', 'Docker', 'Terraform', 'Nginx', 'GitHub Actions', 'Prometheus'],
     github: 'https://github.com/Kaveera725',
     featured: true,
+    category: 'Cloud & IaC',
   },
   {
     title: 'GitOps-Based Kubernetes Deployment with Argo CD',
@@ -245,6 +266,7 @@ export const projects = [
     tags: ['Kubernetes', 'Argo CD', 'GitOps', 'Prometheus', 'Grafana'],
     github: 'https://github.com/Kaveera725',
     featured: true,
+    category: 'Containers',
   },
   {
     title: 'Hotel Menu Manager',
@@ -256,6 +278,7 @@ export const projects = [
     ],
     tags: ['Go', 'Gin', 'React', 'Docker', 'PostgreSQL', 'GitHub Actions', 'AWS'],
     github: 'https://github.com/Kaveera725',
+    category: 'Containers',
   },
   {
     title: 'AgriSL — AI Farming Platform',
@@ -268,6 +291,7 @@ export const projects = [
     ],
     tags: ['GCP', 'Docker', 'Node.js', 'React', 'MySQL', 'OpenAI API', 'GitHub Actions'],
     github: 'https://github.com/Kaveera725',
+    category: 'Cloud & IaC',
   },
   {
     title: 'DHCP & DNS Server Infrastructure',
@@ -278,6 +302,7 @@ export const projects = [
     ],
     tags: ['Ubuntu', 'Linux', 'BIND9', 'DHCP', 'Networking'],
     github: 'https://github.com/Kaveera725',
+    category: 'Networking',
   },
   {
     title: 'Real-Time ChatApp',
@@ -285,6 +310,7 @@ export const projects = [
     bullets: ['Real-time messaging with authentication and dynamic rooms.'],
     tags: ['React', 'Node.js', 'MongoDB', 'Express', 'TailwindCSS'],
     github: 'https://github.com/Kaveera725',
+    category: 'Full-Stack',
   },
 ];
 

@@ -17,6 +17,7 @@
 //      "Download CV" button (path configured in src/data/portfolio.js).
 // ============================================================
 
+import { motion } from 'framer-motion';
 import Navbar from './components/Navbar';
 import DevOpsBackground from './components/DevOpsBackground';
 import Hero from './components/Hero';
@@ -30,7 +31,12 @@ import Footer from './components/Footer';
 
 export default function App() {
   return (
-    <div className="relative min-h-screen overflow-x-hidden bg-base text-slate-300 selection:bg-accent/25">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.6, ease: 'easeOut' }}
+      className="relative min-h-screen overflow-x-hidden bg-base text-slate-300 selection:bg-accent/25"
+    >
       {/* Animated DevOps "code rain" — sits furthest back */}
       <DevOpsBackground />
 
@@ -53,6 +59,6 @@ export default function App() {
       </main>
 
       <Footer />
-    </div>
+    </motion.div>
   );
 }

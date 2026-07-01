@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-scroll';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
 import { Menu, X, Terminal } from 'lucide-react';
 import { navLinks } from '../data/portfolio';
 
@@ -9,6 +9,10 @@ const SCROLL_OFFSET = -72; // height of the fixed navbar
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+
+  // Page scroll progress → smoothed 0–1 for the top progress bar.
+  const { scrollYProgress } = useScroll();
+  const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 30, mass: 0.3 });
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -41,6 +45,12 @@ export default function Navbar() {
           : 'border-b border-transparent bg-transparent'
       }`}
     >
+      {/* Scroll progress bar — fills left→right as the page scrolls */}
+      <motion.div
+        style={{ scaleX: progress }}
+        className="absolute inset-x-0 top-0 z-[60] h-0.5 origin-left bg-gradient-to-r from-accent via-accent to-brand-purple shadow-glow"
+      />
+
       <nav className="mx-auto flex h-[72px] max-w-6xl items-center justify-between px-5 sm:px-8">
         {/* Logo */}
         <Link

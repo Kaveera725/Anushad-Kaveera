@@ -4,6 +4,19 @@ import SectionHeading from './SectionHeading';
 import { experience } from '../data/portfolio';
 import { fadeUp, stagger, viewportOnce } from '../lib/motion';
 
+// Highlights quantified metrics (e.g. "40%", "3x") so numbers pop visually.
+function highlightMetrics(text) {
+  return text.split(/(\d+(?:\.\d+)?%|\d+x\b)/gi).map((part, i) =>
+    /^\d+(?:\.\d+)?%$|^\d+x$/i.test(part) ? (
+      <span key={i} className="font-bold text-cyan-400">
+        {part}
+      </span>
+    ) : (
+      <span key={i}>{part}</span>
+    ),
+  );
+}
+
 export default function Experience() {
   return (
     <section id="experience" className="relative mx-auto max-w-6xl scroll-mt-20 px-5 py-24 sm:px-8">
@@ -28,10 +41,9 @@ export default function Experience() {
               viewport={viewportOnce}
               className="relative pl-12 md:pl-16"
             >
-              {/* Node */}
+              {/* Node — pulsing ring */}
               <span className="absolute left-4 top-2 flex h-3 w-3 -translate-x-1/2 md:left-5">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-60" />
-                <span className="relative inline-flex h-3 w-3 rounded-full bg-accent shadow-glow" />
+                <span className="node-pulse relative inline-flex h-3 w-3 rounded-full bg-accent shadow-glow" />
               </span>
 
               <div className="card p-6 transition-all duration-300 hover:border-accent/30 hover:shadow-glow md:p-8">
@@ -77,10 +89,24 @@ export default function Experience() {
                         size={16}
                         className="mt-0.5 shrink-0 text-terminal-green"
                       />
-                      <span>{bullet}</span>
+                      <span>{highlightMetrics(bullet)}</span>
                     </motion.li>
                   ))}
                 </motion.ul>
+
+                {/* Tech tags */}
+                {job.tags && (
+                  <div className="mt-6 flex flex-wrap gap-2 border-t border-white/5 pt-5">
+                    {job.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="rounded-full bg-slate-800 px-3 py-1 font-mono text-[11px] text-cyan-400"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                )}
               </div>
             </motion.div>
           ))}

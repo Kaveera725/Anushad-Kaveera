@@ -119,7 +119,7 @@ export default function Skills() {
               <motion.div
                 key={cat.name}
                 variants={fadeUp}
-                className={`card group p-6 ${styles.ring}`}
+                className={`card group p-6 transition-all duration-200 hover:-translate-y-1 ${styles.ring}`}
               >
                 {/* Category header */}
                 <div className="mb-5 flex items-center gap-3">

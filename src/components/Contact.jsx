@@ -87,6 +87,20 @@ export default function Contact() {
         subtitle="Have an opportunity, a question, or just want to talk infrastructure? My inbox is open."
       />
 
+      {/* Availability badge */}
+      <motion.div
+        initial={{ opacity: 0, y: 8 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={viewportOnce}
+        className="-mt-6 mb-10 inline-flex items-center gap-2 rounded-full border border-terminal-green/30 bg-terminal-green/5 px-4 py-1.5 text-sm font-medium"
+      >
+        <span className="relative flex h-2 w-2">
+          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-terminal-green opacity-75" />
+          <span className="relative inline-flex h-2 w-2 rounded-full bg-terminal-green" />
+        </span>
+        <span className="text-accent">Currently available for DevOps roles</span>
+      </motion.div>
+
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
         {/* Left — contact cards */}
         <motion.div
@@ -237,15 +251,21 @@ export default function Contact() {
 
           <button
             type="submit"
-            disabled={status === 'sending'}
-            className="group inline-flex items-center justify-center gap-2 rounded-lg bg-accent px-6 py-3 font-semibold text-base shadow-glow transition-all duration-300 hover:bg-accent-soft hover:shadow-glow-lg disabled:opacity-60 disabled:cursor-not-allowed"
+            disabled={status === 'sending' || status === 'sent'}
+            className={`btn-shimmer group relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-lg px-6 py-3 font-semibold text-base transition-all duration-300 disabled:cursor-not-allowed ${
+              status === 'sent'
+                ? 'bg-terminal-green text-base shadow-glow-green'
+                : 'bg-accent shadow-glow hover:bg-accent-soft hover:shadow-glow-lg disabled:opacity-70'
+            }`}
           >
             {status === 'sending' ? (
               <Loader2 size={17} className="animate-spin" />
+            ) : status === 'sent' ? (
+              <CheckCircle2 size={17} />
             ) : (
               <Send size={17} className="transition-transform group-hover:translate-x-0.5" />
             )}
-            {status === 'sending' ? 'Sending…' : 'Send Message'}
+            {status === 'sending' ? 'Sending…' : status === 'sent' ? 'Sent! ✓' : 'Send Message'}
           </button>
 
           {status === 'sent' && (

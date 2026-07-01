@@ -30,25 +30,24 @@
   }
 
   ::selection {
-    background-color: rgba(0, 212, 255, 0.25);
-    color: #e2f8ff;
+    background-color: rgba(0, 212, 255, 0.3);
+    color: #ffffff;
   }
 
-  /* Custom scrollbar */
+  /* Custom scrollbar — thin cyan */
   ::-webkit-scrollbar {
-    width: 10px;
-    height: 10px;
+    width: 4px;
+    height: 4px;
   }
   ::-webkit-scrollbar-track {
     background: #0a0f1e;
   }
   ::-webkit-scrollbar-thumb {
-    background: #16213c;
-    border-radius: 9999px;
-    border: 2px solid #0a0f1e;
+    background: #00d4ff;
+    border-radius: 2px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: #1e2c4f;
+    background: #38e0ff;
   }
 }
 
@@ -126,11 +125,54 @@
   }
 }
 
+/* ============================================================
+   Timeline node — pulsing ring
+   ============================================================ */
+.node-pulse {
+  animation: node-pulse 2s ease-out infinite;
+}
+
+@keyframes node-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(0, 212, 255, 0.5);
+  }
+  70% {
+    box-shadow: 0 0 0 12px rgba(0, 212, 255, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(0, 212, 255, 0);
+  }
+}
+
+/* ============================================================
+   Button shimmer sweep (Contact "Send")
+   ============================================================ */
+.btn-shimmer::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translateX(-160%);
+  background: linear-gradient(
+    120deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.35) 50%,
+    transparent 100%
+  );
+  transition: transform 0.7s ease;
+  pointer-events: none;
+}
+.btn-shimmer:hover::before {
+  transform: translateX(160%);
+}
+
 /* Respect users who prefer reduced motion */
 @media (prefers-reduced-motion: reduce) {
   .orbit-item {
     animation: none !important;
     display: none;
+  }
+  .node-pulse {
+    animation: none !important;
   }
   html {
     scroll-behavior: auto;

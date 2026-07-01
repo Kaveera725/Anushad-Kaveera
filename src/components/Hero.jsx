@@ -1,41 +1,63 @@
-import { useState } from 'react';
+import { useEffect, useState, Fragment } from 'react';
 import { Link } from 'react-scroll';
 import { TypeAnimation } from 'react-type-animation';
 import { motion } from 'framer-motion';
 import {
   Container,
-  LifeBuoy,
+  Hexagon,
   Cloud,
+  Boxes,
   Github,
-  Workflow,
-  Server,
+  Flame,
   Terminal as TerminalIcon,
   FolderGit2,
   Download,
   ChevronDown,
   MapPin,
 } from 'lucide-react';
-import { personal, terminalLines } from '../data/portfolio';
+import { personal, terminalLines, heroStats } from '../data/portfolio';
+import ParticleField from './ParticleField';
+import CountUp from './CountUp';
 
-/* ---------- Orbiting background tech icons ----------------------- */
+/* ---------- Orbiting tech ring ----------------------------------- */
+// Six DevOps tools evenly spaced on a single dashed ring, rotating together.
 const orbiters = [
-  { Icon: Container, color: '#00d4ff', radius: 150, duration: 26, reverse: false, label: 'Docker' },
-  { Icon: LifeBuoy, color: '#7c3aed', radius: 215, duration: 34, reverse: true, label: 'Kubernetes' },
-  { Icon: Cloud, color: '#f59e0b', radius: 285, duration: 42, reverse: false, label: 'AWS' },
-  { Icon: Github, color: '#e2e8f0', radius: 180, duration: 30, reverse: true, label: 'GitHub' },
-  { Icon: Workflow, color: '#22c55e', radius: 250, duration: 38, reverse: false, label: 'CI/CD' },
-  { Icon: Server, color: '#38e0ff', radius: 320, duration: 48, reverse: true, label: 'Linux' },
+  { Icon: Container, color: '#00d4ff', label: 'Docker' },
+  { Icon: Hexagon, color: '#7c3aed', label: 'Kubernetes' },
+  { Icon: Cloud, color: '#f59e0b', label: 'AWS' },
+  { Icon: Boxes, color: '#a78bfa', label: 'Terraform' },
+  { Icon: Github, color: '#e2e8f0', label: 'GitHub' },
+  { Icon: Flame, color: '#22c55e', label: 'Prometheus' },
 ];
+
+const ORBIT_RADIUS = 320; // px — ring sits just outside the terminal
+const ORBIT_DURATION = 20; // s — one full revolution
 
 function OrbitField() {
   return (
     <div className="pointer-events-none absolute inset-0 hidden items-center justify-center sm:flex">
       <div className="relative h-0 w-0">
-        {orbiters.map(({ Icon, color, radius, duration, reverse, label }) => (
+        {/* Dashed cyan orbit ring */}
+        <div
+          className="absolute rounded-full border border-dashed border-accent/30"
+          style={{
+            width: ORBIT_RADIUS * 2,
+            height: ORBIT_RADIUS * 2,
+            left: -ORBIT_RADIUS,
+            top: -ORBIT_RADIUS,
+          }}
+        />
+
+        {orbiters.map(({ Icon, color, label }, i) => (
           <div
             key={label}
-            className={`orbit-item ${reverse ? 'reverse' : ''}`}
-            style={{ '--orbit-radius': `${radius}px`, animationDuration: `${duration}s` }}
+            className="orbit-item"
+            style={{
+              '--orbit-radius': `${ORBIT_RADIUS}px`,
+              animationDuration: `${ORBIT_DURATION}s`,
+              // Negative delay distributes the icons evenly around the ring.
+              animationDelay: `${-(ORBIT_DURATION / orbiters.length) * i}s`,
+            }}
           >
             <div
               className="flex h-11 w-11 items-center justify-center rounded-xl border border-white/10 bg-base-200/70 backdrop-blur-sm"
@@ -48,6 +70,30 @@ function OrbitField() {
         ))}
       </div>
     </div>
+  );
+}
+
+/* ---------- Hero stats bar --------------------------------------- */
+function HeroStats() {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, delay: 0.8 }}
+      className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-4 sm:gap-x-8"
+    >
+      {heroStats.map((stat, i) => (
+        <Fragment key={stat.label}>
+          {i > 0 && <span className="hidden h-10 w-px bg-white/10 sm:block" />}
+          <div>
+            <div className="font-mono text-2xl font-bold text-accent text-glow sm:text-3xl">
+              <CountUp to={stat.value} suffix={stat.suffix} />
+            </div>
+            <div className="mt-1 text-xs text-slate-400 sm:text-sm">{stat.label}</div>
+          </div>
+        </Fragment>
+      ))}
+    </motion.div>
   );
 }
 
@@ -127,6 +173,15 @@ function TerminalWindow() {
 
 /* ---------- Hero ------------------------------------------------- */
 export default function Hero() {
+  const [scrolledPast, setScrolledPast] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolledPast(window.scrollY > 100);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
   return (
     <section
       id="hero"
@@ -136,6 +191,9 @@ export default function Hero() {
       <div className="absolute inset-0 grid-bg opacity-60" />
       <div className="absolute left-1/2 top-1/3 h-[520px] w-[520px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/10 blur-[120px]" />
       <div className="absolute right-1/4 top-2/3 h-[360px] w-[360px] rounded-full bg-brand-purple/10 blur-[120px]" />
+
+      {/* Drifting particle field */}
+      <ParticleField count={55} />
 
       <OrbitField />
 
@@ -198,13 +256,16 @@ export default function Hero() {
             Download CV
           </a>
         </motion.div>
+
+        {/* Animated stats bar */}
+        <HeroStats />
       </div>
 
-      {/* Scroll cue */}
+      {/* Scroll cue — fades out once the user scrolls past 100px */}
       <motion.div
         initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.2 }}
+        animate={{ opacity: scrolledPast ? 0 : 1 }}
+        transition={{ duration: 0.4, delay: scrolledPast ? 0 : 1.2 }}
         className="absolute bottom-7 left-1/2 -translate-x-1/2"
       >
         <Link to="about" smooth duration={500} offset={-72} className="cursor-pointer">
