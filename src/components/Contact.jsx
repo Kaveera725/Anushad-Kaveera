@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Phone, Linkedin, Github, Send, CheckCircle2, User, MessageSquare } from 'lucide-react';
+import { Mail, Phone, Linkedin, Github, Send, CheckCircle2, User, MessageSquare, Paperclip, X } from 'lucide-react';
 import SectionHeading from './SectionHeading';
 import { personal } from '../data/portfolio';
 import { fadeUp, stagger, viewportOnce } from '../lib/motion';
@@ -39,16 +39,24 @@ const inputBase =
 
 export default function Contact() {
   const [form, setForm] = useState({ name: '', email: '', message: '' });
+  const [file, setFile] = useState(null);
   const [sent, setSent] = useState(false);
+  const fileRef = useRef(null);
 
   const handleChange = (e) => setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
 
+  const handleFile = (e) => setFile(e.target.files[0] ?? null);
+
+  const clearFile = () => {
+    setFile(null);
+    if (fileRef.current) fileRef.current.value = '';
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    // No backend required: open the visitor's mail client with a prefilled message.
-    // To use a service instead, swap this for an EmailJS / Formspree call.
+    const attachNote = file ? `\n\n[Attachment: ${file.name} — please attach this file manually]` : '';
     const subject = encodeURIComponent(`Portfolio enquiry from ${form.name}`);
-    const body = encodeURIComponent(`${form.message}\n\n— ${form.name}\n${form.email}`);
+    const body = encodeURIComponent(`${form.message}${attachNote}\n\n— ${form.name}\n${form.email}`);
     window.location.href = `mailto:${personal.email}?subject=${subject}&body=${body}`;
     setSent(true);
   };
@@ -173,6 +181,41 @@ export default function Contact() {
                 className={`${inputBase} resize-none pl-10`}
               />
             </div>
+          </div>
+
+          {/* File attachment */}
+          <div>
+            <label className="mb-2 block text-sm font-medium text-slate-300">
+              Attach File <span className="text-slate-500">(optional)</span>
+            </label>
+            <input
+              ref={fileRef}
+              type="file"
+              onChange={handleFile}
+              className="hidden"
+              id="file-upload"
+            />
+            {file ? (
+              <div className="flex items-center gap-3 rounded-lg border border-accent/30 bg-accent/5 px-4 py-3">
+                <Paperclip size={15} className="shrink-0 text-accent" />
+                <span className="flex-1 truncate text-sm text-slate-300">{file.name}</span>
+                <button
+                  type="button"
+                  onClick={clearFile}
+                  className="text-slate-500 transition-colors hover:text-red-400"
+                >
+                  <X size={15} />
+                </button>
+              </div>
+            ) : (
+              <label
+                htmlFor="file-upload"
+                className="flex cursor-pointer items-center gap-2 rounded-lg border border-dashed border-white/20 px-4 py-3 text-sm text-slate-400 transition-all duration-200 hover:border-accent/50 hover:text-accent"
+              >
+                <Paperclip size={15} />
+                Click to attach a file
+              </label>
+            )}
           </div>
 
           <button

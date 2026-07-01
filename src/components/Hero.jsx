@@ -140,7 +140,7 @@ export default function Hero() {
       <OrbitField />
 
       {/* Foreground content */}
-      <div className="relative z-10 flex w-full max-w-2xl flex-col items-center text-center">
+      <div className="relative z-10 flex w-full max-w-2xl flex-col items-start text-left">
         {/* SEO / a11y heading (visually represented by the terminal below) */}
         <h1 className="sr-only">
           {personal.name} — {personal.title}
@@ -176,7 +176,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.65 }}
-          className="mt-8 flex flex-col items-center gap-4 sm:flex-row"
+          className="mt-8 flex flex-col items-start gap-4 sm:flex-row"
         >
           <Link
             to="projects"
