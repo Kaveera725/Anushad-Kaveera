@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Phone, Linkedin, Github, Send, CheckCircle2, User, MessageSquare, Paperclip, X } from 'lucide-react';
+import emailjs from '@emailjs/browser';
+import { Mail, Phone, Linkedin, Github, Send, CheckCircle2, User, MessageSquare, Paperclip, X, AlertCircle, Loader2 } from 'lucide-react';
 import SectionHeading from './SectionHeading';
 import { personal } from '../data/portfolio';
 import { fadeUp, stagger, viewportOnce } from '../lib/motion';
@@ -40,8 +41,9 @@ const inputBase =
 export default function Contact() {
   const [form, setForm] = useState({ name: '', email: '', message: '' });
   const [file, setFile] = useState(null);
-  const [sent, setSent] = useState(false);
+  const [status, setStatus] = useState('idle'); // idle | sending | sent | error
   const fileRef = useRef(null);
+  const formRef = useRef(null);
 
   const handleChange = (e) => setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
 
@@ -52,13 +54,28 @@ export default function Contact() {
     if (fileRef.current) fileRef.current.value = '';
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const attachNote = file ? `\n\n[Attachment: ${file.name} — please attach this file manually]` : '';
-    const subject = encodeURIComponent(`Portfolio enquiry from ${form.name}`);
-    const body = encodeURIComponent(`${form.message}${attachNote}\n\n— ${form.name}\n${form.email}`);
-    window.location.href = `mailto:${personal.email}?subject=${subject}&body=${body}`;
-    setSent(true);
+    setStatus('sending');
+    try {
+      await emailjs.send(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+        {
+          from_name: form.name,
+          from_email: form.email,
+          message: form.message,
+          attachment_note: file ? `[File selected: ${file.name}]` : '',
+          to_email: personal.email,
+        },
+        import.meta.env.VITE_EMAILJS_PUBLIC_KEY,
+      );
+      setStatus('sent');
+      setForm({ name: '', email: '', message: '' });
+      clearFile();
+    } catch {
+      setStatus('error');
+    }
   };
 
   return (
@@ -220,20 +237,36 @@ export default function Contact() {
 
           <button
             type="submit"
-            className="group inline-flex items-center justify-center gap-2 rounded-lg bg-accent px-6 py-3 font-semibold text-base shadow-glow transition-all duration-300 hover:bg-accent-soft hover:shadow-glow-lg"
+            disabled={status === 'sending'}
+            className="group inline-flex items-center justify-center gap-2 rounded-lg bg-accent px-6 py-3 font-semibold text-base shadow-glow transition-all duration-300 hover:bg-accent-soft hover:shadow-glow-lg disabled:opacity-60 disabled:cursor-not-allowed"
           >
-            <Send size={17} className="transition-transform group-hover:translate-x-0.5" />
-            Send Message
+            {status === 'sending' ? (
+              <Loader2 size={17} className="animate-spin" />
+            ) : (
+              <Send size={17} className="transition-transform group-hover:translate-x-0.5" />
+            )}
+            {status === 'sending' ? 'Sending…' : 'Send Message'}
           </button>
 
-          {sent && (
+          {status === 'sent' && (
             <motion.p
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               className="flex items-center gap-2 text-sm text-terminal-green"
             >
               <CheckCircle2 size={16} />
-              Opening your email client — thanks for reaching out!
+              Message sent! I'll get back to you soon.
+            </motion.p>
+          )}
+
+          {status === 'error' && (
+            <motion.p
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="flex items-center gap-2 text-sm text-red-400"
+            >
+              <AlertCircle size={16} />
+              Something went wrong. Please try emailing me directly at {personal.email}
             </motion.p>
           )}
         </motion.form>
