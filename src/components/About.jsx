@@ -58,9 +58,13 @@ export default function About() {
         >
           <div className="relative">
             <div className="absolute inset-0 animate-pulse rounded-full bg-accent/20 blur-2xl" />
-            <div className="relative flex h-56 w-56 items-center justify-center rounded-full border-2 border-accent/40 bg-base-200 shadow-glow-lg">
-              <div className="absolute inset-3 rounded-full border border-dashed border-accent/20 animate-spin-slow" />
-              <span className="font-mono text-7xl font-bold text-accent text-glow">AK</span>
+            <div className="relative flex h-56 w-56 items-center justify-center rounded-full border-2 border-accent/40 bg-base-200 shadow-glow-lg overflow-hidden">
+              <div className="absolute inset-3 rounded-full border border-dashed border-accent/20 animate-spin-slow pointer-events-none z-10" />
+              <img
+                src="/my_profile.jpeg"
+                alt="Anushad Kaveera"
+                className="h-full w-full object-cover rounded-full"
+              />
             </div>
             {/* Orbiting status dot */}
             <span className="absolute bottom-5 right-5 flex items-center gap-1.5 rounded-full border border-terminal-green/40 bg-base px-3 py-1 font-mono text-xs text-terminal-green shadow-glow-green">
