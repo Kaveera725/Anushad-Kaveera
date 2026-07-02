@@ -27,9 +27,9 @@ export const scaleIn = {
 export const stagger = {
   hidden: {},
   show: {
-    transition: { staggerChildren: 0.09, delayChildren: 0.05 },
+    transition: { staggerChildren: 0.08, delayChildren: 0.05 },
   },
 };
 
 // Sensible default viewport config so animations fire once, slightly early.
-export const viewportOnce = { once: true, margin: '-80px' };
+export const viewportOnce = { once: true, margin: '-100px' };

@@ -26,10 +26,12 @@ export default function SectionHeading({ index, title, command, subtitle }) {
 
       <div className="flex items-baseline gap-3">
         {index && <span className="font-mono text-lg text-accent/70">{index}.</span>}
-        <h2 className="text-3xl font-bold tracking-tight text-slate-50 md:text-4xl">{title}</h2>
+        <h2 className="font-display text-3xl font-bold tracking-tight text-slate-50 md:text-4xl">
+          {title}
+        </h2>
       </div>
 
-      <div className="mt-4 h-px w-24 bg-gradient-to-r from-accent to-transparent shadow-glow" />
+      <div className="mt-4 h-[2px] w-[60px] rounded-full bg-accent shadow-glow" />
 
       {subtitle && <p className="mt-5 max-w-2xl text-slate-400">{subtitle}</p>}
     </motion.div>

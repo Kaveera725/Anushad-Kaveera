@@ -81,16 +81,27 @@ const Icon = ({ name, ...props }) => {
 
 const accentStyles = {
   cyan: {
-    ring: 'group-hover:border-accent/50 group-hover:shadow-glow',
+    ring: 'hover:border-accent/50 hover:shadow-glass-glow',
     iconWrap: 'border-accent/30 bg-accent/10 text-accent',
     dot: 'text-accent',
   },
   purple: {
-    ring: 'group-hover:border-brand-purple/50 group-hover:shadow-glow-purple',
+    ring: 'hover:border-brand-purple/50 hover:shadow-glow-purple',
     iconWrap: 'border-brand-purple/30 bg-brand-purple/10 text-brand-purple-soft',
     dot: 'text-brand-purple-soft',
   },
 };
+
+// Presentational proficiency per category → hover progress bar width.
+// Expert = 90%, Proficient = 75%.
+const EXPERT = new Set([
+  'Linux & Scripting',
+  'Web Servers',
+  'Containers',
+  'CI / CD',
+  'Version Control',
+]);
+const proficiencyOf = (name) => (EXPERT.has(name) ? 90 : 75);
 
 export default function Skills() {
   return (
@@ -119,30 +130,38 @@ export default function Skills() {
               <motion.div
                 key={cat.name}
                 variants={fadeUp}
-                className={`card group p-6 transition-all duration-200 hover:-translate-y-1 ${styles.ring}`}
+                className={`card group relative overflow-hidden rounded-2xl p-6 transition-all duration-300 ease-out hover:-translate-y-1.5 ${styles.ring}`}
               >
                 {/* Category header */}
                 <div className="mb-5 flex items-center gap-3">
                   <span
-                    className={`flex h-10 w-10 items-center justify-center rounded-lg border ${styles.iconWrap} transition-transform duration-300 group-hover:scale-110`}
+                    className={`glass flex h-10 w-10 items-center justify-center rounded-lg border ${styles.iconWrap} transition-transform duration-300 group-hover:scale-110`}
                   >
                     <Icon name={cat.icon} size={20} />
                   </span>
-                  <h3 className="font-semibold text-slate-100">{cat.name}</h3>
+                  <h3 className="font-display font-semibold text-slate-100">{cat.name}</h3>
                 </div>
 
-                {/* Skill chips */}
+                {/* Skill badges */}
                 <ul className="flex flex-wrap gap-2">
                   {cat.items.map((item) => (
                     <li
                       key={item.name}
-                      className="flex items-center gap-1.5 rounded-lg border border-white/10 bg-base-300/60 px-2.5 py-1.5 text-xs text-slate-300 transition-colors duration-200 hover:border-white/20 hover:text-slate-100"
+                      className="flex items-center gap-1.5 rounded-full border border-accent/30 bg-[rgba(0,212,255,0.08)] px-3 py-1.5 text-xs text-slate-300 transition-colors duration-200 hover:bg-[rgba(0,212,255,0.2)] hover:text-slate-50"
                     >
                       <Icon name={item.icon} size={13} className={styles.dot} />
                       {item.name}
                     </li>
                   ))}
                 </ul>
+
+                {/* Proficiency bar — draws in along the bottom on hover */}
+                <div className="absolute inset-x-0 bottom-0 h-[3px]">
+                  <div
+                    className="h-full origin-left scale-x-0 bg-gradient-to-r from-accent to-brand-purple shadow-glow transition-transform duration-500 ease-out group-hover:scale-x-100"
+                    style={{ width: `${proficiencyOf(cat.name)}%` }}
+                  />
+                </div>
               </motion.div>
             );
           })}

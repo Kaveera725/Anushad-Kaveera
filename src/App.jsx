@@ -19,6 +19,7 @@
 
 import { motion } from 'framer-motion';
 import Navbar from './components/Navbar';
+import CustomCursor from './components/CustomCursor';
 import DevOpsBackground from './components/DevOpsBackground';
 import Hero from './components/Hero';
 import About from './components/About';
@@ -37,14 +38,16 @@ export default function App() {
       transition={{ duration: 0.6, ease: 'easeOut' }}
       className="relative min-h-screen overflow-x-hidden bg-base text-slate-300 selection:bg-accent/25"
     >
+      {/* Custom cursor — dot + trailing ring (fine pointers only) */}
+      <CustomCursor />
+
       {/* Animated DevOps "code rain" — sits furthest back */}
       <DevOpsBackground />
 
-      {/* Global ambient background glow — layered over the rain to soften it */}
-      <div className="pointer-events-none fixed inset-0 -z-10">
-        <div className="absolute left-1/4 top-0 h-[480px] w-[480px] rounded-full bg-accent/5 blur-[140px]" />
-        <div className="absolute bottom-0 right-0 h-[420px] w-[420px] rounded-full bg-brand-purple/5 blur-[140px]" />
-      </div>
+      {/* Ambient gradient orbs — fixed, slow-drifting glow */}
+      <div className="ambient-orb ambient-orb--1" aria-hidden="true" />
+      <div className="ambient-orb ambient-orb--2" aria-hidden="true" />
+      <div className="ambient-orb ambient-orb--3" aria-hidden="true" />
 
       <Navbar />
 

@@ -51,8 +51,9 @@ export default function Footer() {
         {/* Bottom bar */}
         <div className="flex flex-col items-center justify-between gap-6 border-t border-white/10 pt-8 md:flex-row">
           <div>
-            <div className="flex items-center gap-2 font-mono text-lg font-bold text-accent text-glow">
-              AK<span className="animate-blink text-terminal-green">_</span>
+            <div className="flex items-center gap-2 font-display text-lg font-bold text-accent text-glow">
+              <span className="font-mono text-sm">&gt;_</span>
+              AK<span className="animate-blink font-mono text-terminal-green">_</span>
             </div>
             <p className="mt-2 max-w-md text-sm text-slate-500">
               {personal.name} — {personal.title}. {personal.motto}

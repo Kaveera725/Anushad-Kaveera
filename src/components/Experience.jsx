@@ -1,5 +1,6 @@
-import { motion } from 'framer-motion';
-import { Briefcase, MapPin, CalendarClock, CheckCircle2 } from 'lucide-react';
+import { useRef } from 'react';
+import { motion, useScroll, useSpring } from 'framer-motion';
+import { Briefcase, MapPin } from 'lucide-react';
 import SectionHeading from './SectionHeading';
 import { experience } from '../data/portfolio';
 import { fadeUp, stagger, viewportOnce } from '../lib/motion';
@@ -8,7 +9,7 @@ import { fadeUp, stagger, viewportOnce } from '../lib/motion';
 function highlightMetrics(text) {
   return text.split(/(\d+(?:\.\d+)?%|\d+x\b)/gi).map((part, i) =>
     /^\d+(?:\.\d+)?%$|^\d+x$/i.test(part) ? (
-      <span key={i} className="font-bold text-cyan-400">
+      <span key={i} className="metric-glow">
         {part}
       </span>
     ) : (
@@ -18,6 +19,15 @@ function highlightMetrics(text) {
 }
 
 export default function Experience() {
+  const timelineRef = useRef(null);
+
+  // The gradient line "draws" downward as the section scrolls into view.
+  const { scrollYProgress } = useScroll({
+    target: timelineRef,
+    offset: ['start 0.8', 'end 0.5'],
+  });
+  const lineScale = useSpring(scrollYProgress, { stiffness: 90, damping: 25 });
+
   return (
     <section id="experience" className="relative mx-auto max-w-6xl scroll-mt-20 px-5 py-24 sm:px-8">
       <SectionHeading
@@ -27,9 +37,13 @@ export default function Experience() {
         subtitle="Where I'm putting DevOps into practice."
       />
 
-      <div className="relative">
-        {/* Vertical timeline line */}
-        <div className="absolute bottom-0 left-4 top-2 w-px bg-gradient-to-b from-accent via-accent/40 to-transparent md:left-5" />
+      <div ref={timelineRef} className="relative">
+        {/* Vertical timeline line — cyan→purple gradient, drawn on scroll */}
+        <div className="absolute bottom-0 left-4 top-2 w-[2px] bg-white/5 md:left-5" />
+        <motion.div
+          style={{ scaleY: lineScale }}
+          className="absolute bottom-0 left-4 top-2 w-[2px] origin-top bg-gradient-to-b from-accent to-brand-purple shadow-glow md:left-5"
+        />
 
         <div className="space-y-12">
           {experience.map((job, idx) => (
@@ -41,40 +55,42 @@ export default function Experience() {
               viewport={viewportOnce}
               className="relative pl-12 md:pl-16"
             >
-              {/* Node — pulsing ring */}
-              <span className="absolute left-4 top-2 flex h-3 w-3 -translate-x-1/2 md:left-5">
-                <span className="node-pulse relative inline-flex h-3 w-3 rounded-full bg-accent shadow-glow" />
+              {/* Node — cyan circle, white core, pulsing ring */}
+              <span className="absolute left-4 top-2 flex h-4 w-4 -translate-x-1/2 items-center justify-center md:left-5">
+                <span className="node-pulse absolute inline-flex h-4 w-4 rounded-full bg-accent" />
+                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-white" />
               </span>
 
-              <div className="card p-6 transition-all duration-300 hover:border-accent/30 hover:shadow-glow md:p-8">
+              <div className="card p-6 transition-all duration-300 hover:border-accent/30 hover:shadow-glass-glow md:p-8">
                 {/* Header */}
                 <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
                   <div>
-                    <h3 className="text-xl font-bold text-slate-50">{job.role}</h3>
+                    <h3 className="font-display text-xl font-bold text-slate-50">{job.role}</h3>
                     <div className="mt-1 flex items-center gap-2 font-mono text-accent">
                       <Briefcase size={15} />
                       {job.company}
                     </div>
                   </div>
 
-                  <div className="flex flex-col gap-2 text-sm text-slate-400 md:items-end">
-                    <span className="inline-flex items-center gap-1.5">
-                      <CalendarClock size={14} className="text-accent/70" />
-                      {job.period}
+                  <div className="flex flex-col gap-2 md:items-end">
+                    <span className="inline-flex items-center gap-2">
+                      <span className="rounded-full border border-accent/40 bg-accent/10 px-3 py-1 font-mono text-xs font-semibold text-accent">
+                        {job.period}
+                      </span>
                       {job.current && (
-                        <span className="ml-1 rounded-full bg-terminal-green/10 px-2 py-0.5 font-mono text-[11px] text-terminal-green">
+                        <span className="rounded-full border border-terminal-green/30 bg-terminal-green/10 px-2 py-0.5 font-mono text-[11px] text-terminal-green">
                           active
                         </span>
                       )}
                     </span>
-                    <span className="inline-flex items-center gap-1.5">
-                      <MapPin size={14} className="text-accent/70" />
+                    <span className="glass inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs text-slate-400">
+                      <MapPin size={13} className="text-accent/70" />
                       {job.location}
                     </span>
                   </div>
                 </div>
 
-                {/* Bullets */}
+                {/* Bullets — cyan "▸" markers */}
                 <motion.ul
                   variants={stagger}
                   className="mt-6 grid grid-cols-1 gap-3 lg:grid-cols-2"
@@ -85,22 +101,19 @@ export default function Experience() {
                       variants={fadeUp}
                       className="flex items-start gap-2.5 text-sm leading-relaxed text-slate-300"
                     >
-                      <CheckCircle2
-                        size={16}
-                        className="mt-0.5 shrink-0 text-terminal-green"
-                      />
+                      <span className="mt-px select-none font-mono text-accent">▸</span>
                       <span>{highlightMetrics(bullet)}</span>
                     </motion.li>
                   ))}
                 </motion.ul>
 
-                {/* Tech tags */}
+                {/* Tech tags — purple pills */}
                 {job.tags && (
                   <div className="mt-6 flex flex-wrap gap-2 border-t border-white/5 pt-5">
                     {job.tags.map((tag) => (
                       <span
                         key={tag}
-                        className="rounded-full bg-slate-800 px-3 py-1 font-mono text-[11px] text-cyan-400"
+                        className="rounded-full border border-brand-purple/40 bg-[rgba(124,58,237,0.15)] px-3 py-1 font-mono text-[11px] text-brand-purple-soft transition-colors duration-200 hover:bg-[rgba(124,58,237,0.3)] hover:text-white"
                       >
                         {tag}
                       </span>

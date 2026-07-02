@@ -29,7 +29,7 @@ export default function DevOpsBackground() {
     const glyphs =
       '01{}[]()<>$#~/\\|;:=+-*&%!?_kubectldockerterraformgitnpxyamlssh⎈→λ'.split('');
 
-    const BASE = '#0a0f1e'; // page background — used to paint the fade trail
+    const BASE = '#020817'; // page background — used to paint the fade trail
     const DIM = 'rgba(0, 212, 255, 0.55)'; // cyan accent, dim
     const LEAD = '#22c55e'; // terminal-green leading glyph
 
@@ -66,7 +66,7 @@ export default function DevOpsBackground() {
 
     const draw = () => {
       // Translucent overwrite leaves fading trails behind each glyph.
-      ctx.fillStyle = 'rgba(10, 15, 30, 0.10)';
+      ctx.fillStyle = 'rgba(2, 8, 23, 0.10)';
       ctx.fillRect(0, 0, width, height);
 
       ctx.font = `${fontSize}px "JetBrains Mono", ui-monospace, monospace`;

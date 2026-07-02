@@ -8,6 +8,13 @@
 @layer base {
   :root {
     color-scheme: dark;
+    --bg-base: #020817;
+    --bg-layer-2: #0a0f1e;
+    --bg-layer-3: #0f172a;
+    --accent: #00d4ff;
+    --accent-2: #7c3aed;
+    --accent-3: #06b6d4;
+    --glass-border: rgba(255, 255, 255, 0.08);
   }
 
   * {
@@ -24,30 +31,39 @@
     text-rendering: optimizeLegibility;
   }
 
-  /* Headings default to bright text */
+  /* Headings — Space Grotesk, bright text */
   h1, h2, h3, h4 {
-    @apply text-slate-50;
+    @apply font-display text-slate-50;
   }
 
   ::selection {
-    background-color: rgba(0, 212, 255, 0.3);
+    background-color: rgba(0, 212, 255, 0.25);
     color: #ffffff;
   }
 
-  /* Custom scrollbar — thin cyan */
+  /* Custom scrollbar — thin cyan→purple gradient */
   ::-webkit-scrollbar {
     width: 4px;
     height: 4px;
   }
   ::-webkit-scrollbar-track {
-    background: #0a0f1e;
+    background: #020817;
   }
   ::-webkit-scrollbar-thumb {
-    background: #00d4ff;
+    background: linear-gradient(#00d4ff, #7c3aed);
     border-radius: 2px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: #38e0ff;
+    background: linear-gradient(#38e0ff, #a78bfa);
+  }
+}
+
+/* Hide the native cursor only on precise-pointer devices while the
+   custom cursor component is mounted (it adds this class to <html>). */
+@media (hover: hover) and (pointer: fine) {
+  html.has-custom-cursor,
+  html.has-custom-cursor * {
+    cursor: none !important;
   }
 }
 
@@ -55,9 +71,31 @@
    COMPONENT UTILITIES
    ============================================================ */
 @layer components {
-  /* Frosted dark card */
+  /* Glassmorphism card — used by every card/section shell */
   .card {
-    @apply rounded-xl border border-white/10 bg-base-200/60 backdrop-blur-sm transition-all duration-300;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    @apply transition-all duration-300;
+  }
+
+  .glass {
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  /* Cyan gradient headline text */
+  .text-gradient {
+    background: linear-gradient(135deg, #00d4ff, #7c3aed);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
   }
 
   /* Cyan glow text */
@@ -67,6 +105,13 @@
 
   .text-glow-green {
     text-shadow: 0 0 16px rgba(34, 197, 94, 0.7);
+  }
+
+  /* Glowing metric span inside experience bullets */
+  .metric-glow {
+    color: #00d4ff;
+    font-weight: 700;
+    text-shadow: 0 0 14px rgba(0, 212, 255, 0.65);
   }
 
   /* Subtle dotted/line grid background */
@@ -79,50 +124,128 @@
     -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 40%, transparent 100%);
   }
 
+  /* Hexagonal grid pattern (behind the hero profile ring) */
+  .hex-bg {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100' viewBox='0 0 56 100'%3E%3Cpath d='M28 66L0 50L0 16L28 0L56 16L56 50L28 66L28 100' fill='none' stroke='rgba(0,212,255,0.08)' stroke-width='1'/%3E%3Cpath d='M28 0L28 34L0 50L0 84L28 100L56 84L56 50' fill='none' stroke='rgba(0,212,255,0.04)' stroke-width='1'/%3E%3C/svg%3E");
+    background-size: 56px 100px;
+    mask-image: radial-gradient(circle at 50% 50%, #000 30%, transparent 72%);
+    -webkit-mask-image: radial-gradient(circle at 50% 50%, #000 30%, transparent 72%);
+  }
+
+  /* Underline that draws in from the left on hover */
+  .link-underline {
+    position: relative;
+  }
+  .link-underline::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    height: 1px;
+    width: 100%;
+    background: #00d4ff;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+  }
+  .link-underline:hover::after {
+    transform: scaleX(1);
+  }
+
   /* Active nav link (react-scroll activeClass) */
   .nav-active {
     @apply text-accent;
   }
   .nav-active::after {
-    width: 100% !important;
+    transform: scaleX(1) !important;
   }
 }
 
 /* ============================================================
-   KEYFRAMES — orbiting hero icons (uses per-element CSS vars)
+   AMBIENT GRADIENT ORBS — fixed, slow-drifting background glow
    ============================================================ */
-.orbit-item {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  margin-top: -22px;
-  margin-left: -22px;
-  animation-name: orbit;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
+.ambient-orb {
+  position: fixed;
+  border-radius: 9999px;
+  pointer-events: none;
+  z-index: 0;
+  filter: blur(90px);
   will-change: transform;
 }
-
-.orbit-item.reverse {
-  animation-name: orbit-reverse;
+.ambient-orb--1 {
+  top: -160px;
+  left: -160px;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(124, 58, 237, 0.2), transparent 70%);
+  animation: orb-drift-1 20s ease-in-out infinite;
+}
+.ambient-orb--2 {
+  top: -120px;
+  right: -120px;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(0, 212, 255, 0.15), transparent 70%);
+  animation: orb-drift-2 20s ease-in-out infinite;
+}
+.ambient-orb--3 {
+  bottom: -140px;
+  left: 50%;
+  margin-left: -200px;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(6, 182, 212, 0.1), transparent 70%);
+  animation: orb-drift-3 20s ease-in-out infinite;
 }
 
-@keyframes orbit {
-  from {
-    transform: rotate(0deg) translateX(var(--orbit-radius)) rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg) translateX(var(--orbit-radius)) rotate(-360deg);
-  }
+@keyframes orb-drift-1 {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(60px, 40px); }
+}
+@keyframes orb-drift-2 {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(-50px, 60px); }
+}
+@keyframes orb-drift-3 {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(40px, -50px); }
 }
 
-@keyframes orbit-reverse {
-  from {
-    transform: rotate(360deg) translateX(var(--orbit-radius)) rotate(-360deg);
-  }
-  to {
-    transform: rotate(0deg) translateX(var(--orbit-radius)) rotate(0deg);
-  }
+/* ============================================================
+   Custom cursor — dot + trailing ring
+   ============================================================ */
+.cursor-dot,
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 10000;
+  border-radius: 9999px;
+  transform: translate(-50%, -50%);
+}
+.cursor-dot {
+  width: 8px;
+  height: 8px;
+  background: #00d4ff;
+  box-shadow: 0 0 10px rgba(0, 212, 255, 0.8);
+}
+.cursor-ring {
+  width: 32px;
+  height: 32px;
+  border: 1.5px solid rgba(0, 212, 255, 0.75);
+  background: transparent;
+  transition:
+    width 0.25s ease,
+    height 0.25s ease,
+    background-color 0.25s ease,
+    opacity 0.25s ease;
+}
+.cursor-ring.is-hovering {
+  width: 48px;
+  height: 48px;
+  background: rgba(0, 212, 255, 0.2);
+  border-color: rgba(0, 212, 255, 0.9);
 }
 
 /* ============================================================
@@ -167,12 +290,18 @@
 
 /* Respect users who prefer reduced motion */
 @media (prefers-reduced-motion: reduce) {
-  .orbit-item {
+  .node-pulse,
+  .ambient-orb,
+  .animate-marquee {
     animation: none !important;
-    display: none;
   }
-  .node-pulse {
-    animation: none !important;
+  .cursor-dot,
+  .cursor-ring {
+    display: none !important;
+  }
+  html.has-custom-cursor,
+  html.has-custom-cursor * {
+    cursor: auto !important;
   }
   html {
     scroll-behavior: auto;
