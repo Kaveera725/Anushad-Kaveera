@@ -1,3 +1,4 @@
+import { lazy, Suspense, useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import {
   Terminal,
@@ -37,6 +38,65 @@ import {
 import SectionHeading from './SectionHeading';
 import { skillCategories } from '../data/portfolio';
 import { fadeUp, stagger, viewportOnce } from '../lib/motion';
+
+// 3D pipeline graph pulls in three.js — lazy + IntersectionObserver gated
+// so it only loads once the user scrolls near it.
+const NetworkGraph3D = lazy(() => import('./three/NetworkGraph3D'));
+
+/* ---------- Live DevOps pipeline — 3D network graph --------------- */
+function PipelineGraph() {
+  const ref = useRef(null);
+  const [shouldLoad, setShouldLoad] = useState(false);
+  const webgl = typeof window !== 'undefined' && !!window.WebGLRenderingContext;
+
+  useEffect(() => {
+    if (!webgl || !ref.current) return;
+    const observer = new IntersectionObserver(
+      ([e]) => {
+        if (e.isIntersecting) setShouldLoad(true);
+      },
+      { rootMargin: '200px' }
+    );
+    observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, [webgl]);
+
+  if (!webgl) return null;
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={viewportOnce}
+      transition={{ duration: 0.6 }}
+      className="mt-14"
+    >
+      <p className="font-mono text-sm text-accent">
+        <span className="text-terminal-green">$</span> docker ps --all
+      </p>
+      <h3 className="mt-2 font-display text-2xl font-semibold text-slate-100">
+        Live DevOps Pipeline
+      </h3>
+
+      <div
+        ref={ref}
+        className="card mt-6 h-[320px] w-full overflow-hidden border-accent/20 hover:border-accent/40"
+      >
+        {shouldLoad && (
+          <Suspense
+            fallback={
+              <div className="flex h-full w-full items-center justify-center">
+                <div className="h-24 w-24 animate-pulse rounded-full border border-accent/30 bg-accent/10 blur-sm" />
+              </div>
+            }
+          >
+            <NetworkGraph3D className="h-full w-full" />
+          </Suspense>
+        )}
+      </div>
+    </motion.div>
+  );
+}
 
 // String keys from data → lucide components.
 const iconMap = {
@@ -166,6 +226,9 @@ export default function Skills() {
             );
           })}
         </motion.div>
+
+        {/* Live 3D CI/CD pipeline network */}
+        <PipelineGraph />
       </div>
     </section>
   );

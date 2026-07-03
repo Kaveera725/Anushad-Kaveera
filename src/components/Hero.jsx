@@ -1,4 +1,4 @@
-import { useEffect, useState, Fragment } from 'react';
+import { useEffect, useRef, useState, Fragment, lazy, Suspense } from 'react';
 import { Link } from 'react-scroll';
 import { TypeAnimation } from 'react-type-animation';
 import { motion } from 'framer-motion';
@@ -8,10 +8,17 @@ import {
   Download,
   ChevronDown,
   MapPin,
+  Globe as GlobeIcon,
+  Zap,
+  Lock,
 } from 'lucide-react';
 import { personal, terminalLines, heroStats } from '../data/portfolio';
 import ParticleField from './ParticleField';
 import CountUp from './CountUp';
+
+// The globe pulls in three.js + react-three-fiber — lazy-load it so it
+// splits into its own chunk and never blocks the hero's first paint.
+const GlobeScene = lazy(() => import('./three/GlobeScene'));
 
 /* ---------- Hero stats bar --------------------------------------- */
 function HeroStats() {
@@ -111,43 +118,100 @@ function TerminalWindow() {
   );
 }
 
-/* ---------- Glowing profile ring --------------------------------- */
-function ProfileRing() {
+/* ---------- WebGL support probe ----------------------------------- */
+const hasWebGL = () =>
+  typeof window !== 'undefined' && !!window.WebGLRenderingContext;
+
+/* ---------- Static SVG fallback (no WebGL) ------------------------- */
+function GlobeFallback() {
+  return (
+    <svg viewBox="0 0 200 200" className="h-full w-full" aria-hidden="true">
+      <defs>
+        <radialGradient id="globe-fb" cx="38%" cy="35%" r="70%">
+          <stop offset="0%" stopColor="#16345c" />
+          <stop offset="100%" stopColor="#0d1b2a" />
+        </radialGradient>
+      </defs>
+      <circle cx="100" cy="100" r="72" fill="url(#globe-fb)" stroke="rgba(0,212,255,0.35)" />
+      {/* Longitude / latitude lines */}
+      <ellipse cx="100" cy="100" rx="72" ry="26" fill="none" stroke="rgba(0,212,255,0.18)" />
+      <ellipse cx="100" cy="100" rx="72" ry="52" fill="none" stroke="rgba(0,212,255,0.12)" />
+      <ellipse cx="100" cy="100" rx="26" ry="72" fill="none" stroke="rgba(0,212,255,0.18)" />
+      <ellipse cx="100" cy="100" rx="52" ry="72" fill="none" stroke="rgba(0,212,255,0.12)" />
+      <line x1="28" y1="100" x2="172" y2="100" stroke="rgba(0,212,255,0.18)" />
+      {/* Region dots */}
+      <circle cx="128" cy="112" r="3.5" fill="#22c55e" />
+      <circle cx="142" cy="78" r="3" fill="#00d4ff" />
+      <circle cx="66" cy="72" r="3" fill="#f59e0b" />
+      <circle cx="96" cy="58" r="3" fill="#7c3aed" />
+      <circle cx="72" cy="132" r="3" fill="#00d4ff" />
+    </svg>
+  );
+}
+
+/* ---------- Pulsing loader shown while the three.js chunk loads ---- */
+function GlobeLoader() {
+  return (
+    <div className="flex h-full w-full items-center justify-center">
+      <div className="h-40 w-40 animate-pulse rounded-full border border-accent/30 bg-accent/10 blur-sm" />
+    </div>
+  );
+}
+
+/* ---------- Hero right column — cinematic 3D deployment globe ------ */
+function GlobeShowcase() {
+  const containerRef = useRef(null);
+  const [shouldLoad, setShouldLoad] = useState(false);
+  const webgl = hasWebGL();
+
+  // Only mount the WebGL canvas once the hero is actually on screen.
+  useEffect(() => {
+    if (!webgl || !containerRef.current) return;
+    const observer = new IntersectionObserver(([e]) => {
+      if (e.isIntersecting) setShouldLoad(true);
+    });
+    observer.observe(containerRef.current);
+    return () => observer.disconnect();
+  }, [webgl]);
+
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.9 }}
+      initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.8, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
-      className="relative flex items-center justify-center"
+      transition={{ duration: 0.9, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
+      className="w-full"
     >
-      {/* Hexagonal grid backdrop */}
-      <div className="hex-bg absolute -inset-24" aria-hidden="true" />
+      {/* Globe container */}
+      <div
+        ref={containerRef}
+        className="relative h-[260px] w-full overflow-hidden rounded-[20px] sm:h-[300px] lg:h-[420px]"
+        style={{
+          background: 'radial-gradient(circle, rgba(0,212,255,0.05) 0%, transparent 70%)',
+        }}
+      >
+        {webgl ? (
+          shouldLoad && (
+            <Suspense fallback={<GlobeLoader />}>
+              <GlobeScene className="h-full w-full" />
+            </Suspense>
+          )
+        ) : (
+          <GlobeFallback />
+        )}
+      </div>
 
-      {/* Ambient glow behind the circle */}
-      <div className="absolute h-72 w-72 rounded-full bg-accent/15 blur-[80px]" aria-hidden="true" />
-
-      <div className="relative h-64 w-64 sm:h-72 sm:w-72">
-        {/* Outer dashed ring — one full rotation every 20s */}
-        <div className="absolute -inset-6 animate-spin-slower rounded-full border-2 border-dashed border-accent/40" />
-
-        {/* Inner solid glowing ring + photo */}
-        <div className="relative flex h-full w-full items-center justify-center overflow-hidden rounded-full border-[3px] border-accent bg-base-200 shadow-glow-lg">
-          {/* Initials fallback sits behind the photo */}
-          <span className="absolute font-display text-6xl font-bold text-accent/60">AK</span>
-          <img
-            src="/my_profile.jpeg"
-            alt={personal.name}
-            className="relative h-full w-full rounded-full object-cover"
-          />
-        </div>
-
-        {/* Online badge */}
-        <span className="glass absolute -bottom-1 right-3 flex items-center gap-1.5 rounded-full px-3 py-1 font-mono text-xs text-terminal-green shadow-glow-green">
-          <span className="relative flex h-2 w-2">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-terminal-green opacity-75" />
-            <span className="relative inline-flex h-2 w-2 rounded-full bg-terminal-green" />
-          </span>
-          online
+      {/* Caption — mini-stats row */}
+      <div className="mt-4 flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-xs text-slate-500">
+        <span className="flex items-center gap-1.5">
+          <GlobeIcon size={13} className="text-accent" /> 12 Cloud Regions
+        </span>
+        <span className="text-slate-700">·</span>
+        <span className="flex items-center gap-1.5">
+          <Zap size={13} className="text-terminal-green" /> 99.9% Uptime
+        </span>
+        <span className="text-slate-700">·</span>
+        <span className="flex items-center gap-1.5">
+          <Lock size={13} className="text-brand-purple-soft" /> Zero Downtime Deploy
         </span>
       </div>
     </motion.div>
@@ -178,8 +242,8 @@ export default function Hero() {
       {/* Drifting particle field */}
       <ParticleField count={60} />
 
-      {/* Foreground content — 60 / 40 split on desktop */}
-      <div className="relative z-10 mx-auto grid w-full max-w-6xl grid-cols-1 items-center gap-14 lg:grid-cols-[3fr_2fr]">
+      {/* Foreground content — 55 / 45 split on desktop */}
+      <div className="relative z-10 mx-auto grid w-full max-w-6xl grid-cols-1 items-center gap-14 lg:grid-cols-[11fr_9fr]">
         {/* ---- Left column ---- */}
         <div className="flex flex-col items-start text-left">
           <motion.div
@@ -261,9 +325,9 @@ export default function Hero() {
           <HeroStats />
         </div>
 
-        {/* ---- Right column — glowing profile ring ---- */}
-        <div className="hidden justify-center lg:flex">
-          <ProfileRing />
+        {/* ---- Right column — cinematic 3D deployment globe ---- */}
+        <div className="flex justify-center">
+          <GlobeShowcase />
         </div>
       </div>
 
