@@ -160,7 +160,7 @@ export default function Contact() {
               </p>
               <p className="flex items-center gap-2 font-mono text-sm text-terminal-green">
                 <span className="h-2 w-2 rounded-full bg-terminal-green shadow-glow-green" />
-                Open to internships & DevOps roles — based in {personal.location}
+                Open to DevOps & Cloud Engineering opportunities — based in {personal.location}
               </p>
             </motion.div>
           </motion.div>

@@ -50,14 +50,14 @@ export const terminalLines = [
   {
     type: 'cmd',
     prefix: '$',
-    text: 'systemctl status internship',
+    text: 'systemctl status career',
     textClass: 'text-slate-100',
     pause: 250,
   },
   {
     type: 'out',
     prefix: '→',
-    text: '● StackNet (Pvt) Ltd — Active [2025–Present] ✓',
+    text: '● Associate DevOps Engineer @ StackNet — Active ✓',
     textClass: 'text-terminal-green',
     pause: 500,
   },
@@ -74,7 +74,7 @@ export const terminalLines = [
 // ----- About ------------------------------------------------------
 export const about = {
   paragraphs: [
-    "I'm a Computer Science undergraduate at the University of Colombo School of Computing (UCSC), 2023–2026, and a DevOps Engineering Intern at StackNet (Pvt) Ltd.",
+    "I'm a Computer Science undergraduate at the University of Colombo School of Computing (UCSC), 2023–2026, and an Associate DevOps Engineer at StackNet (Pvt) Ltd, where I deploy microservices architectures on Amazon EKS and ECS.",
     'I live in the space between development and operations — building CI/CD pipelines, provisioning cloud infrastructure as code, containerizing workloads, and wiring up observability so systems ship faster and stay healthy.',
     "I'm passionate about cloud infrastructure, automation, and reliability engineering: removing toil, hardening security, and designing systems that scale gracefully under load.",
   ],
@@ -209,11 +209,38 @@ export const skillCategories = [
 export const experience = [
   {
     company: 'StackNet (Pvt) Ltd',
-    role: 'DevOps Engineering Intern',
-    period: '2025 – Present',
+    role: 'Associate DevOps Engineer',
+    period: '2026 – Present',
     location: 'Colombo, Sri Lanka',
     current: true,
     bullets: [
+      'Deploying microservices architecture applications on Amazon EKS (Elastic Kubernetes Service) with containerized workloads.',
+      'Deployed applications on Amazon ECS with Application Load Balancing for high availability and traffic distribution.',
+      'Provisioned and managed Amazon RDS relational databases and DynamoDB NoSQL databases for production workloads.',
+      'Designed scalable, fault-tolerant cloud architectures leveraging AWS managed container and database services.',
+      'Built CI/CD pipelines to automate build, test, and deployment of microservices to EKS and ECS clusters.',
+    ],
+    tags: [
+      'AWS',
+      'EKS',
+      'ECS',
+      'Kubernetes',
+      'Microservices',
+      'Load Balancing',
+      'RDS',
+      'DynamoDB',
+      'Docker',
+      'CI/CD',
+    ],
+  },
+  {
+    company: 'StackNet (Pvt) Ltd',
+    role: 'DevOps Engineering Intern',
+    period: '2025 – 2026',
+    location: 'Colombo, Sri Lanka',
+    current: false,
+    bullets: [
+      'Successfully completed the DevOps Engineering internship program.',
       'Managed Linux server administration (Ubuntu) including service management, log analysis, and Bash scripting for automation.',
       'Built and maintained CI/CD pipelines using GitHub Actions and Jenkins, reducing deployment time by 40%.',
       'Containerized applications using Docker and managed multi-container deployments with Docker Compose.',
