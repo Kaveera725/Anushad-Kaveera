@@ -1,12 +1,13 @@
-import { forwardRef, useEffect, useMemo, useRef } from 'react';
+import { forwardRef, Suspense, useEffect, useMemo, useRef } from 'react';
 import * as THREE from 'three';
-import { Canvas, useFrame, useThree } from '@react-three/fiber';
+import { Canvas, useFrame, useLoader, useThree } from '@react-three/fiber';
 import { OrbitControls, Html, Line } from '@react-three/drei';
 
 /**
  * Cinematic 3D deployment globe — React Three Fiber.
  *
- * Deep-ocean planet with a faint cyan wireframe, dual atmosphere layers,
+ * Textured Earth (NASA Blue Marble) with a faint cyan wireframe, dual
+ * atmosphere layers,
  * 12 pulsing cloud-region hotspots (ripple rings), and glowing arcs with
  * "data packet" spheres traveling between regions. Wrapped in a Canvas with
  * drag-to-rotate OrbitControls plus HTML overlay badges, so the Hero can
@@ -23,6 +24,9 @@ import { OrbitControls, Html, Line } from '@react-three/drei';
 
 const GLOBE_R = 2.2;
 const DEG = Math.PI / 180;
+// Equirectangular day map — continents must stay recognizable, so land
+// detail matters more here than matching the neon palette exactly.
+const EARTH_TEXTURE = `${import.meta.env.BASE_URL}textures/earth-day.jpg`;
 const CYAN = '#00d4ff';
 const PURPLE = '#7c3aed';
 const GREEN = '#22c55e';
@@ -77,16 +81,26 @@ const ROUTES = [
 
 /* ---------- Globe core + wireframe + atmosphere ------------------- */
 const GlobeCore = forwardRef(function GlobeCore(_, ref) {
+  const earthMap = useLoader(THREE.TextureLoader, EARTH_TEXTURE);
+  useMemo(() => {
+    earthMap.colorSpace = THREE.SRGBColorSpace;
+    earthMap.anisotropy = 8;
+  }, [earthMap]);
+
   return (
     <group>
-      {/* Deep dark ocean sphere */}
+      {/* Earth sphere — day map so continents/countries are recognizable.
+          The emissiveMap re-uses the day map so the night side never goes
+          fully black and landmasses stay readable while the globe spins. */}
       <mesh ref={ref}>
         <sphereGeometry args={[GLOBE_R, 80, 80]} />
         <meshPhongMaterial
-          color="#0d1b2a"
-          emissive="#0a2040"
-          emissiveIntensity={0.4}
-          shininess={80}
+          map={earthMap}
+          emissiveMap={earthMap}
+          emissive="#7a8db0"
+          emissiveIntensity={0.45}
+          specular="#1d3a5f"
+          shininess={12}
         />
       </mesh>
 
@@ -330,7 +344,9 @@ export default function GlobeScene({ className = '' }) {
         dpr={[1, 2]}
         frameloop={animate ? 'always' : 'demand'}
       >
-        <GlobeSceneInner animate={animate} />
+        <Suspense fallback={null}>
+          <GlobeSceneInner animate={animate} />
+        </Suspense>
         <OrbitControls
           enableZoom={false}
           enablePan={false}
