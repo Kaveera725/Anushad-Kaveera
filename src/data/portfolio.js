@@ -356,17 +356,17 @@ export const projects = [
 
 // ----- Certifications --------------------------------------------
 export const certifications = [
-  { issuer: 'Linux Foundation', title: 'Introduction to Kubernetes', code: 'LFS158' },
-  { issuer: 'Linux Foundation', title: 'Introduction to DevOps and SRE', code: 'LFS162' },
-  { issuer: 'Linux Foundation', title: 'Introduction to DevSecOps for Managers', code: 'LFS180' },
-  { issuer: 'Linux Foundation', title: 'Introduction to Serverless on Kubernetes', code: 'LFS157' },
-  { issuer: 'Linux Foundation', title: 'Automating Supply Chain Security: SBOMs and Signatures', code: 'LFEL1007' },
-  { issuer: 'AWS', title: 'Getting Started with DevOps on AWS' },
-  { issuer: 'AWS', title: 'Amazon EKS Primer' },
-  { issuer: 'AWS', title: 'AWS Fargate Overview' },
-  { issuer: 'AWS', title: 'Introduction to Containers' },
-  { issuer: 'AWS', title: 'Introduction to Cloud 101' },
-  { issuer: 'Cisco', title: 'Introduction to Cybersecurity' },
+  { issuer: 'Linux Foundation', title: 'Introduction to Kubernetes',                              code: 'LFS158',   image: '/certs/linux-foundation/lfs158.png'   },
+  { issuer: 'Linux Foundation', title: 'Introduction to DevOps and SRE',                          code: 'LFS162',   image: '/certs/linux-foundation/lfs162.png'   },
+  { issuer: 'Linux Foundation', title: 'Introduction to DevSecOps for Managers',                  code: 'LFS180',   image: '/certs/linux-foundation/lfs180.png'   },
+  { issuer: 'Linux Foundation', title: 'Introduction to Serverless on Kubernetes',                 code: 'LFS157',   image: '/certs/linux-foundation/lfs157.png'   },
+  { issuer: 'Linux Foundation', title: 'Automating Supply Chain Security: SBOMs and Signatures',   code: 'LFEL1007', image: '/certs/linux-foundation/lfel1007.png' },
+  { issuer: 'AWS', title: 'Getting Started with DevOps on AWS',  image: null },
+  { issuer: 'AWS', title: 'Amazon EKS Primer',                   image: '/certs/aws/eks.png'        },
+  { issuer: 'AWS', title: 'AWS Fargate Overview',                image: '/certs/aws/fargate.png'    },
+  { issuer: 'AWS', title: 'Introduction to Containers',          image: '/certs/aws/containers.png' },
+  { issuer: 'AWS', title: 'Introduction to Cloud 101',           image: null },
+  { issuer: 'Cisco', title: 'Introduction to Cybersecurity',     image: '/certs/cisco/cybersecurity.jpeg' },
 ];
 
 // ----- Education --------------------------------------------------
