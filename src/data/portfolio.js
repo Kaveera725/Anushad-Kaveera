@@ -346,6 +346,8 @@ export const certifications = [
   { issuer: 'Linux Foundation', title: 'Introduction to Kubernetes', code: 'LFS158' },
   { issuer: 'Linux Foundation', title: 'Introduction to DevOps and SRE', code: 'LFS162' },
   { issuer: 'Linux Foundation', title: 'Introduction to DevSecOps for Managers', code: 'LFS180' },
+  { issuer: 'Linux Foundation', title: 'Introduction to Serverless on Kubernetes', code: 'LFS157' },
+  { issuer: 'Linux Foundation', title: 'Automating Supply Chain Security: SBOMs and Signatures', code: 'LFEL1007' },
   { issuer: 'AWS', title: 'Getting Started with DevOps on AWS' },
   { issuer: 'AWS', title: 'Amazon EKS Primer' },
   { issuer: 'AWS', title: 'AWS Fargate Overview' },
