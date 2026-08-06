@@ -80,8 +80,8 @@ export const about = {
     "I'm passionate about cloud infrastructure, automation, and reliability engineering: removing toil, hardening security, and designing systems that scale gracefully under load.",
   ],
   stats: [
-    { value: 40, suffix: '%', label: 'Faster deployments' },
-    { value: 5, suffix: '+', label: 'Projects shipped' },
+    { value: 6, suffix: '+', label: 'Projects Shipped' },
+    { value: 5, suffix: '+', label: 'AWS Services Used' },
     { value: 10, suffix: '+', label: 'Certifications' },
   ],
 };
@@ -89,8 +89,8 @@ export const about = {
 // ----- Hero stats bar ---------------------------------------------
 // Compact counters shown under the hero CTAs (count up on scroll into view).
 export const heroStats = [
-  { value: 40, suffix: '%', label: 'Faster Deployments' },
   { value: 6, suffix: '+', label: 'Projects Deployed' },
+  { value: 5, suffix: '+', label: 'AWS Services' },
   { value: 10, suffix: '+', label: 'Certifications' },
 ];
 
@@ -215,23 +215,28 @@ export const experience = [
     location: 'Colombo, Sri Lanka',
     current: true,
     bullets: [
-      'Deploying microservices architecture applications on Amazon EKS (Elastic Kubernetes Service) with containerized workloads.',
-      'Deployed applications on Amazon ECS with Application Load Balancing for high availability and traffic distribution.',
-      'Provisioned and managed Amazon RDS relational databases and DynamoDB NoSQL databases for production workloads.',
-      'Designed scalable, fault-tolerant cloud architectures leveraging AWS managed container and database services.',
-      'Built CI/CD pipelines to automate build, test, and deployment of microservices to EKS and ECS clusters.',
+      'Orchestrate microservices workloads on Amazon EKS, managing Kubernetes deployments, services, and rolling updates across production clusters.',
+      'Deploy containerized applications on Amazon ECS with Application Load Balancer (ALB) for high-availability traffic distribution and zero-downtime releases.',
+      'Provision and manage Amazon RDS (MySQL/PostgreSQL) and DynamoDB NoSQL databases, including parameter groups, backups, and read replicas for production reliability.',
+      'Design and provision scalable, fault-tolerant AWS cloud infrastructure using Terraform (IaC) — VPCs, subnets, security groups, IAM roles, and managed services fully codified.',
+      'Build and maintain CI/CD pipelines (GitHub Actions / Jenkins) to automate build, test, image push to ECR, and blue-green deployments to EKS and ECS clusters.',
+      'Manage the end-to-end AWS infrastructure for StackNet, ensuring high availability, security compliance, and cost-optimised resource utilisation across all cloud workloads.',
     ],
     tags: [
       'AWS',
       'EKS',
       'ECS',
       'Kubernetes',
+      'Terraform',
+      'IaC',
       'Microservices',
-      'Load Balancing',
+      'ALB',
       'RDS',
       'DynamoDB',
+      'ECR',
       'Docker',
       'CI/CD',
+      'GitHub Actions',
     ],
   },
   {
@@ -243,7 +248,7 @@ export const experience = [
     bullets: [
       'Successfully completed the DevOps Engineering internship program.',
       'Managed Linux server administration (Ubuntu) including service management, log analysis, and Bash scripting for automation.',
-      'Built and maintained CI/CD pipelines using GitHub Actions and Jenkins, reducing deployment time by 40%.',
+      'Built and maintained CI/CD pipelines using GitHub Actions and Jenkins, automating build, test, and deployment workflows for containerized applications.',
       'Containerized applications using Docker and managed multi-container deployments with Docker Compose.',
       'Provisioned AWS cloud infrastructure using Terraform (EC2, VPC, security groups, IAM roles).',
       'Configured Nginx as a reverse proxy with SSL/TLS and Cloudflare DNS management.',
