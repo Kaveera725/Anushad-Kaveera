@@ -75,12 +75,12 @@ export const terminalLines = [
 // ----- About ------------------------------------------------------
 export const about = {
   paragraphs: [
-    "I'm a Computer Science undergraduate at the University of Colombo School of Computing (UCSC), 2023–2026, and an Associate DevOps Engineer at StackNet (Pvt) Ltd, where I deploy microservices architectures on Amazon EKS and ECS.",
+    "I'm a Computer Science undergraduate at the University of Colombo School of Computing (UCSC), 2023–2026, and an Associate DevOps Engineer at StackNet (Pvt) Ltd, where I independently plan, provision, and deliver production-grade cloud workloads on AWS — from Terraform-managed infrastructure to containerized microservices on EKS and ECS.",
     'I live in the space between development and operations — building CI/CD pipelines, provisioning cloud infrastructure as code, containerizing workloads, and wiring up observability so systems ship faster and stay healthy.',
     "I'm passionate about cloud infrastructure, automation, and reliability engineering: removing toil, hardening security, and designing systems that scale gracefully under load.",
   ],
   stats: [
-    { value: 6, suffix: '+', label: 'Projects Shipped' },
+    { value: 10, suffix: '+', label: 'Projects Deployed' },
     { value: 5, suffix: '+', label: 'AWS Services Used' },
     { value: 10, suffix: '+', label: 'Certifications' },
   ],
@@ -89,7 +89,7 @@ export const about = {
 // ----- Hero stats bar ---------------------------------------------
 // Compact counters shown under the hero CTAs (count up on scroll into view).
 export const heroStats = [
-  { value: 6, suffix: '+', label: 'Projects Deployed' },
+  { value: 10, suffix: '+', label: 'Projects Deployed' },
   { value: 5, suffix: '+', label: 'AWS Services' },
   { value: 10, suffix: '+', label: 'Certifications' },
 ];
@@ -215,6 +215,7 @@ export const experience = [
     location: 'Colombo, Sri Lanka',
     current: true,
     bullets: [
+      'Independently planned, provisioned, and delivered 10+ production deployments end-to-end — covering infrastructure design, containerisation, CI/CD pipeline setup, database configuration, and live monitoring.',
       'Orchestrate microservices workloads on Amazon EKS, managing Kubernetes deployments, services, and rolling updates across production clusters.',
       'Deploy containerized applications on Amazon ECS with Application Load Balancer (ALB) for high-availability traffic distribution and zero-downtime releases.',
       'Provision and manage Amazon RDS (MySQL/PostgreSQL) and DynamoDB NoSQL databases, including parameter groups, backups, and read replicas for production reliability.',
