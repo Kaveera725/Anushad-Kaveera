@@ -318,7 +318,20 @@ export const projects = [
     ],
     tags: ['GCP', 'Docker', 'Node.js', 'React', 'MySQL', 'OpenAI API', 'GitHub Actions'],
     github: 'https://github.com/Kaveera725',
-    category: 'Cloud & IaC',
+    category: 'Machine Learning (ML)',
+  },
+  {
+    title: 'TourMateAI — AI Travel Planner',
+    year: '2026',
+    bullets: [
+      'An AI-powered web app for Sri Lankan tourists combining personalized recommendations, a travel chatbot, and landmark image recognition.',
+      'React frontend integrated with a Flask backend, MySQL database, and Firebase authentication.',
+      'Features weather-aware itinerary planning using OpenWeather API and interactive navigation via Google Maps API.',
+      'Developed with a parallel-track decoupled architecture utilizing a mock-supported shared API contract to prevent blocker states.',
+    ],
+    tags: ['React', 'Flask', 'MySQL', 'Firebase', 'Google Maps API', 'OpenWeather API', 'Python', 'AI/ML'],
+    github: 'https://github.com/Kaveera725',
+    category: 'Machine Learning (ML)',
   },
   {
     title: 'DHCP & DNS Server Infrastructure',

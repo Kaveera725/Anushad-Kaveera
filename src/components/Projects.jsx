@@ -5,7 +5,7 @@ import SectionHeading from './SectionHeading';
 import { projects } from '../data/portfolio';
 import { fadeUp, viewportOnce } from '../lib/motion';
 
-const FILTERS = ['All', 'Cloud & IaC', 'Containers', 'Full-Stack', 'Networking'];
+const FILTERS = ['All', 'Cloud & IaC', 'Containers', 'Full-Stack', 'Networking', 'Machine Learning (ML)'];
 
 const featuredProjects = projects.filter((p) => p.featured);
 const gridProjects = projects.filter((p) => !p.featured);
