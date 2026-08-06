@@ -26,6 +26,7 @@ import About from './components/About';
 import Skills from './components/Skills';
 import Experience from './components/Experience';
 import Projects from './components/Projects';
+import DevOpsPipeline from './components/DevOpsPipeline';
 import Certifications from './components/Certifications';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
@@ -56,6 +57,7 @@ export default function App() {
         <About />
         <Skills />
         <Experience />
+        <DevOpsPipeline />
         <Projects />
         <Certifications />
         <Contact />
