@@ -115,7 +115,7 @@ export default function About() {
           <div className="mt-1 font-display font-semibold leading-snug text-slate-100">
             {uni.qualification}
           </div>
-          <div className="mt-1 text-sm text-slate-400">UCSC · {uni.period}</div>
+          <div className="mt-1 text-sm text-slate-400">{uni.institution} · {uni.period}</div>
         </Cell>
 
         {/* Cell 6 — headline stat (6 cols) */}
