@@ -13,7 +13,7 @@ export const personal = {
   linkedin: 'https://linkedin.com/in/anushad-kaveera',
   github: 'https://github.com/Kaveera725',
   motto: 'Automate everything. Secure everything. Scale everything.',
-  cv: '/Anushad_Kaveera_DevOps_Engineer_Resume.pdf',
+  cv: '/Associate_DevOps_Engineer-Anushad Kaveera.pdf',
 };
 
 // ----- Navigation -------------------------------------------------
