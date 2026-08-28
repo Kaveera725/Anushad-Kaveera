@@ -58,7 +58,7 @@ export const terminalLines = [
   {
     type: 'out',
     prefix: '→',
-    text: '● Associate DevOps Engineer @ StackNet — Active ✓',
+    text: '● Junior DevOps Engineer @ StackNet — Active ✓',
     textClass: 'text-terminal-green',
     pause: 500,
   },
@@ -75,7 +75,7 @@ export const terminalLines = [
 // ----- About ------------------------------------------------------
 export const about = {
   paragraphs: [
-    "I'm a Computer Science undergraduate at the University of Colombo School of Computing (UCSC), 2023–2026, and an Associate DevOps Engineer at StackNet (Pvt) Ltd, where I independently plan, provision, and deliver production-grade cloud workloads on AWS — from Terraform-managed infrastructure to containerized microservices on EKS and ECS.",
+    "I'm a Computer Science undergraduate at the University of Colombo School of Computing (UCSC), 2023–2026, and a Junior DevOps Engineer at StackNet (Pvt) Ltd, where I independently plan, provision, and deliver production-grade cloud workloads on AWS — from Terraform-managed infrastructure to containerized microservices on EKS and ECS.",
     'I live in the space between development and operations — building CI/CD pipelines, provisioning cloud infrastructure as code, containerizing workloads, and wiring up observability so systems ship faster and stay healthy.',
     "I'm passionate about cloud infrastructure, automation, and reliability engineering: removing toil, hardening security, and designing systems that scale gracefully under load.",
   ],
@@ -210,7 +210,7 @@ export const skillCategories = [
 export const experience = [
   {
     company: 'StackNet (Pvt) Ltd',
-    role: 'Associate DevOps Engineer',
+    role: 'Junior DevOps Engineer',
     period: '2026 – Present',
     location: 'Colombo, Sri Lanka',
     current: true,
