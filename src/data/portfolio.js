@@ -82,8 +82,8 @@ export const about = {
   ],
   stats: [
     { value: 10, suffix: '+', label: 'Projects Deployed' },
-    { value: 5, suffix: '+', label: 'AWS Services Used' },
-    { value: 10, suffix: '+', label: 'Certifications' },
+    { value: 10, suffix: '+', label: 'AWS Services Used' },
+    { value: 15, suffix: '+', label: 'Certifications' },
   ],
 };
 
@@ -91,8 +91,8 @@ export const about = {
 // Compact counters shown under the hero CTAs (count up on scroll into view).
 export const heroStats = [
   { value: 10, suffix: '+', label: 'Projects Deployed' },
-  { value: 5, suffix: '+', label: 'AWS Services' },
-  { value: 10, suffix: '+', label: 'Certifications' },
+  { value: 10, suffix: '+', label: 'AWS Services' },
+  { value: 15, suffix: '+', label: 'Certifications' },
 ];
 
 // ----- Skills -----------------------------------------------------
