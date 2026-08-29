@@ -443,7 +443,7 @@ export default function DevOpsPipeline() {
 
       <div ref={ref} className="relative mx-auto max-w-7xl px-4 sm:px-8">
         <SectionHeading
-          index="03.5"
+          index="04.5"
           command="cat .github/workflows/ci-cd.yml"
           title="CI / CD Pipeline"
           subtitle="End-to-end automation — from code commit to production release."

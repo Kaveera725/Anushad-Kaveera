@@ -211,7 +211,7 @@ export default function Projects() {
     >
       <div className="mx-auto max-w-6xl px-5 sm:px-8">
         <SectionHeading
-          index="04"
+          index="05"
           command="git log --oneline projects/"
           title="Projects"
           subtitle="Selected work across cloud, containers, CI/CD, and infrastructure."

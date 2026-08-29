@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { Link } from 'react-scroll';
 import { MapPin, Briefcase, GraduationCap, Rocket, FolderGit2, Award } from 'lucide-react';
 import SectionHeading from './SectionHeading';
 import CountUp from './CountUp';
@@ -107,15 +108,34 @@ export default function About() {
         </Cell>
 
         {/* Cell 5 — education (4 cols) */}
-        <Cell className="md:col-span-4">
-          <span className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg border border-brand-purple/30 bg-brand-purple/10 text-brand-purple-soft">
-            <GraduationCap size={19} />
-          </span>
-          <div className="text-xs uppercase tracking-wider text-slate-500">Education</div>
-          <div className="mt-1 font-display font-semibold leading-snug text-slate-100">
+        <Cell className="md:col-span-4 border-brand-purple/30 bg-gradient-to-br from-base-200/90 to-brand-purple/10">
+          <div className="flex items-center justify-between">
+            <span className="flex h-10 w-10 items-center justify-center rounded-lg border border-accent/40 bg-accent/10 text-accent shadow-glow">
+              <GraduationCap size={20} />
+            </span>
+            <span className="rounded-full border border-brand-purple/40 bg-brand-purple/20 px-2.5 py-0.5 font-mono text-[11px] text-brand-purple-soft font-semibold">
+              {uni.status || 'Graduated'}
+            </span>
+          </div>
+          <div className="mt-4 text-xs uppercase tracking-wider text-slate-500">Degree &amp; University</div>
+          <div className="mt-1 font-display text-lg font-bold leading-snug text-white">
             {uni.qualification}
           </div>
-          <div className="mt-1 text-sm text-slate-400">{uni.institution} · {uni.period}</div>
+          <div className="mt-1 text-sm font-semibold text-accent">
+            {uni.shortInstitution || uni.institution}
+          </div>
+          <div className="mt-3 flex items-center justify-between border-t border-white/5 pt-3">
+            <span className="font-mono text-xs text-slate-400">{uni.period}</span>
+            <Link
+              to="education"
+              smooth
+              duration={500}
+              offset={-72}
+              className="cursor-pointer font-mono text-xs text-accent transition-colors hover:text-accent-soft hover:underline flex items-center gap-1"
+            >
+              Details &rarr;
+            </Link>
+          </div>
         </Cell>
 
         {/* Cell 6 — headline stat (6 cols) */}

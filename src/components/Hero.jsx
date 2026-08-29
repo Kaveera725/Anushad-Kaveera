@@ -11,8 +11,9 @@ import {
   Globe as GlobeIcon,
   Zap,
   Lock,
+  GraduationCap,
 } from 'lucide-react';
-import { personal, terminalLines, heroStats } from '../data/portfolio';
+import { personal, terminalLines, heroStats, education } from '../data/portfolio';
 import ParticleField from './ParticleField';
 import CountUp from './CountUp';
 
@@ -246,18 +247,41 @@ export default function Hero() {
       <div className="relative z-10 mx-auto grid w-full max-w-6xl grid-cols-1 items-center gap-14 lg:grid-cols-[11fr_9fr]">
         {/* ---- Left column ---- */}
         <div className="flex flex-col items-start text-left">
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="glass mb-7 inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-medium text-accent"
-          >
-            <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-terminal-green opacity-75" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-terminal-green" />
-            </span>
-            Available for DevOps opportunities
-          </motion.div>
+          <div className="mb-7 flex flex-wrap items-center gap-3">
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="glass inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-medium text-accent"
+            >
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-terminal-green opacity-75" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-terminal-green" />
+              </span>
+              Available for DevOps opportunities
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+            >
+              <Link
+                to="education"
+                smooth
+                duration={500}
+                offset={-72}
+                className="glass group inline-flex cursor-pointer items-center gap-2 rounded-full border border-brand-purple/40 bg-brand-purple/10 px-4 py-1.5 text-xs font-medium text-slate-200 transition-all duration-300 hover:border-accent/60 hover:bg-accent/10 hover:text-accent hover:shadow-glow"
+              >
+                <GraduationCap size={14} className="text-accent transition-transform group-hover:scale-110" />
+                <span>
+                  <strong className="font-semibold text-white">BSc in Computer Science</strong>
+                  <span className="mx-1 text-slate-500">·</span>
+                  <span className="text-slate-300">Univ. of Colombo (UCSC)</span>
+                </span>
+              </Link>
+            </motion.div>
+          </div>
 
           {/* Name + gradient title */}
           <motion.h1

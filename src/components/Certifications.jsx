@@ -134,7 +134,7 @@ export default function Certifications() {
         className="relative mx-auto max-w-6xl scroll-mt-20 px-5 py-24 sm:px-8"
       >
         <SectionHeading
-          index="05"
+          index="06"
           command="ls ~/certifications --badges"
           title="Certifications"
           subtitle="Continuous learning across Kubernetes, DevOps, SRE, cloud, and security."

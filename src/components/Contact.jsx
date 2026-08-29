@@ -94,7 +94,7 @@ export default function Contact() {
   return (
     <section id="contact" className="relative mx-auto max-w-6xl scroll-mt-20 px-5 py-24 sm:px-8">
       <SectionHeading
-        index="06"
+        index="07"
         command="./contact.sh --connect"
         title="Get In Touch"
         subtitle="Have an opportunity, a question, or just want to talk infrastructure? My inbox is open."

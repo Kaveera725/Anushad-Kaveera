@@ -22,11 +22,13 @@ import Navbar from './components/Navbar';
 import CustomCursor from './components/CustomCursor';
 import DevOpsBackground from './components/DevOpsBackground';
 import Hero from './components/Hero';
+import EducationHighlight from './components/EducationHighlight';
 import About from './components/About';
 import Skills from './components/Skills';
 import Experience from './components/Experience';
-import Projects from './components/Projects';
+import Education from './components/Education';
 import DevOpsPipeline from './components/DevOpsPipeline';
+import Projects from './components/Projects';
 import Certifications from './components/Certifications';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
@@ -54,9 +56,11 @@ export default function App() {
 
       <main>
         <Hero />
+        <EducationHighlight />
         <About />
         <Skills />
         <Experience />
+        <Education />
         <DevOpsPipeline />
         <Projects />
         <Certifications />

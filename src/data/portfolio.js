@@ -21,6 +21,7 @@ export const navLinks = [
   { id: 'about', label: 'About' },
   { id: 'skills', label: 'Skills' },
   { id: 'experience', label: 'Experience' },
+  { id: 'education', label: 'Education' },
   { id: 'pipeline',   label: 'Pipeline'   },
   { id: 'projects',   label: 'Projects'   },
   { id: 'certifications', label: 'Certifications' },
@@ -75,7 +76,7 @@ export const terminalLines = [
 // ----- About ------------------------------------------------------
 export const about = {
   paragraphs: [
-    "I'm a Computer Science undergraduate at the University of Colombo School of Computing (UCSC), 2023–2026, and a Junior DevOps Engineer at StackNet (Pvt) Ltd, where I independently plan, provision, and deliver production-grade cloud workloads on AWS — from Terraform-managed infrastructure to containerized microservices on EKS and ECS.",
+    "I'm a Computer Science graduate from the University of Colombo School of Computing (UCSC), 2023–2026, and a Junior DevOps Engineer at StackNet (Pvt) Ltd, where I independently plan, provision, and deliver production-grade cloud workloads on AWS — from Terraform-managed infrastructure to containerized microservices on EKS and ECS.",
     'I live in the space between development and operations — building CI/CD pipelines, provisioning cloud infrastructure as code, containerizing workloads, and wiring up observability so systems ship faster and stay healthy.',
     "I'm passionate about cloud infrastructure, automation, and reliability engineering: removing toil, hardening security, and designing systems that scale gracefully under load.",
   ],
@@ -380,12 +381,23 @@ export const certifications = [
 export const education = [
   {
     institution: 'University of Colombo School of Computing (UCSC)',
-    qualification: 'B.Sc. Computer Science',
+    shortInstitution: 'University of Colombo',
+    qualification: 'BSc in Computer Science',
+    degreeType: "Bachelor's Degree",
     period: '2023 – 2026',
+    status: 'Graduated',
+    location: 'Colombo, Sri Lanka',
+    featured: true,
   },
   {
     institution: 'Saralankara National College',
-    qualification: 'G.C.E. A/L — Physical Science (1A, 2B)',
+    shortInstitution: 'Saralankara National College',
+    qualification: 'G.C.E. Advanced Level (A/L) — Physical Science (1A, 2B)',
+    degreeType: 'Secondary Education',
     period: '2018 – 2021',
+    status: 'Completed',
+    location: 'Galle, Sri Lanka',
+    featured: false,
   },
 ];
+

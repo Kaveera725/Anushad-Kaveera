@@ -38,11 +38,18 @@ export default function Footer() {
               <motion.div
                 key={edu.institution}
                 variants={fadeUp}
-                className="card p-5 transition-colors hover:border-accent/30"
               >
-                <div className="mb-1 font-mono text-xs text-accent">{edu.period}</div>
-                <h4 className="font-semibold text-slate-100">{edu.institution}</h4>
-                <p className="mt-1 text-sm text-slate-400">{edu.qualification}</p>
+                <Link
+                  to="education"
+                  smooth
+                  duration={500}
+                  offset={-72}
+                  className="card block cursor-pointer p-5 transition-all duration-300 hover:-translate-y-1 hover:border-accent/40 hover:shadow-glass-glow"
+                >
+                  <div className="mb-1 font-mono text-xs text-accent">{edu.period}</div>
+                  <h4 className="font-semibold text-slate-100">{edu.institution}</h4>
+                  <p className="mt-1 text-sm text-slate-400">{edu.qualification}</p>
+                </Link>
               </motion.div>
             ))}
           </motion.div>
