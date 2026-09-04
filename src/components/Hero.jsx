@@ -337,7 +337,7 @@ export default function Hero() {
 
             <a
               href={personal.cv}
-              download
+              download="Anushad Kaveera - Intern Devops Engineer.pdf"
               className="group inline-flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg bg-accent px-6 py-3 font-semibold text-[#020817] shadow-glow transition-all duration-300 hover:bg-accent-soft hover:shadow-glow-lg sm:w-auto"
             >
               <Download size={18} className="transition-transform group-hover:translate-y-0.5" />
