@@ -276,6 +276,7 @@ export const experience = [
 // ----- Projects ---------------------------------------------------
 export const projects = [
   {
+    id: 'cloud-native-platform',
     title: 'Cloud-Native Web Application Platform',
     year: '2026',
     bullets: [
@@ -291,6 +292,7 @@ export const projects = [
     category: 'Cloud & IaC',
   },
   {
+    id: 'argo-cd',
     title: 'GitOps-Based Kubernetes Deployment with Argo CD',
     year: '2026',
     bullets: [
@@ -304,6 +306,7 @@ export const projects = [
     category: 'Containers',
   },
   {
+    id: 'hotel-menu-manager',
     title: 'Hotel Menu Manager',
     year: '2025',
     bullets: [
@@ -316,6 +319,7 @@ export const projects = [
     category: 'Containers',
   },
   {
+    id: 'agrisl',
     title: 'AgriSL — AI Farming Platform',
     year: '2026',
     bullets: [
@@ -329,6 +333,7 @@ export const projects = [
     category: 'Machine Learning (ML)',
   },
   {
+    id: 'tourmateai',
     title: 'TourMateAI — AI Travel Planner',
     year: '2026',
     bullets: [
@@ -342,6 +347,7 @@ export const projects = [
     category: 'Machine Learning (ML)',
   },
   {
+    id: 'dhcp-dns',
     title: 'DHCP & DNS Server Infrastructure',
     year: '2025',
     bullets: [
@@ -353,6 +359,7 @@ export const projects = [
     category: 'Networking',
   },
   {
+    id: 'realtime-chat',
     title: 'Real-Time ChatApp',
     year: '2024',
     bullets: ['Real-time messaging with authentication and dynamic rooms.'],

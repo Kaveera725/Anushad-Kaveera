@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Github, ArrowUpRight, Star, FolderGit2, Terminal } from 'lucide-react';
+import { Github, ArrowUpRight, Star, FolderGit2, Terminal, Images } from 'lucide-react';
 import SectionHeading from './SectionHeading';
+import ScreenshotGallery from './ScreenshotGallery';
 import { projects } from '../data/portfolio';
+import { hasScreenshots, getScreenshotCount } from '../data/projectScreenshots';
 import { fadeUp, viewportOnce } from '../lib/motion';
 
 const FILTERS = ['All', 'Cloud & IaC', 'Containers', 'Full-Stack', 'Networking', 'Machine Learning (ML)'];
@@ -11,15 +13,20 @@ const featuredProjects = projects.filter((p) => p.featured);
 const gridProjects = projects.filter((p) => !p.featured);
 
 /* Decorative terminal-style mockup panel for featured cards */
-function ProjectMockup({ project }) {
+function ProjectMockup({ project, onOpenGallery, hasImages, screenshotCount }) {
   return (
-    <div className="glass relative flex h-full min-h-[220px] items-center justify-center overflow-hidden rounded-xl">
+    <div
+      onClick={hasImages ? () => onOpenGallery(project) : undefined}
+      className={`glass group/mockup relative flex h-full min-h-[220px] items-center justify-center overflow-hidden rounded-xl ${
+        hasImages ? 'cursor-pointer' : ''
+      }`}
+    >
       <div className="grid-bg absolute inset-0 opacity-70" />
       <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-accent/15 blur-3xl" />
       <div className="absolute -bottom-10 -left-10 h-40 w-40 rounded-full bg-brand-purple/15 blur-3xl" />
 
       {/* Mini terminal chrome */}
-      <div className="card relative w-[85%] overflow-hidden">
+      <div className="card relative w-[85%] overflow-hidden transition-transform duration-300 group-hover/mockup:scale-[1.02]">
         <div className="flex items-center gap-1.5 border-b border-white/[0.08] bg-base-300/60 px-3 py-2">
           <span className="h-2 w-2 rounded-full bg-[#ff5f56]" />
           <span className="h-2 w-2 rounded-full bg-[#ffbd2e]" />
@@ -40,12 +47,25 @@ function ProjectMockup({ project }) {
           ))}
         </div>
       </div>
+
+      {/* Click overlay hint if has images */}
+      {hasImages && (
+        <div className="absolute inset-0 flex items-center justify-center bg-base-DEFAULT/60 opacity-0 backdrop-blur-[2px] transition-opacity duration-300 group-hover/mockup:opacity-100">
+          <span className="inline-flex items-center gap-2 rounded-full border border-accent/50 bg-base-100/90 px-4 py-2 font-mono text-xs text-accent shadow-glow">
+            <Images size={14} />
+            <span>View {screenshotCount} Screenshots</span>
+          </span>
+        </div>
+      )}
     </div>
   );
 }
 
 /* Full-width featured card — image side alternates left/right */
-function FeaturedCard({ project, flipped }) {
+function FeaturedCard({ project, flipped, onOpenGallery }) {
+  const hasImages = hasScreenshots(project.id || project.title);
+  const screenshotCount = getScreenshotCount(project.id || project.title);
+
   return (
     <motion.article
       variants={fadeUp}
@@ -62,14 +82,34 @@ function FeaturedCard({ project, flipped }) {
           flipped ? 'md:[&>*:first-child]:order-2' : ''
         }`}
       >
-        <ProjectMockup project={project} />
+        <ProjectMockup
+          project={project}
+          onOpenGallery={onOpenGallery}
+          hasImages={hasImages}
+          screenshotCount={screenshotCount}
+        />
 
         <div className="flex flex-col">
           <div className="mb-4 flex items-start justify-between gap-4">
-            <span className="inline-flex items-center gap-1 rounded-full border border-accent/40 bg-accent/10 px-3 py-1 font-mono text-[11px] text-accent">
-              <Star size={11} className="fill-current" />
-              Featured
-            </span>
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="inline-flex items-center gap-1 rounded-full border border-accent/40 bg-accent/10 px-3 py-1 font-mono text-[11px] text-accent">
+                <Star size={11} className="fill-current" />
+                Featured
+              </span>
+
+              {hasImages && (
+                <button
+                  type="button"
+                  onClick={() => onOpenGallery(project)}
+                  aria-label={`View screenshots for ${project.title}`}
+                  className="inline-flex items-center gap-1.5 rounded-full border border-accent/40 bg-accent/10 px-3 py-1 font-mono text-[11px] text-accent transition-all duration-200 hover:bg-accent/25 hover:border-accent hover:shadow-glow focus:outline-none focus:ring-2 focus:ring-accent"
+                >
+                  <Images size={12} />
+                  <span>Screenshots ({screenshotCount})</span>
+                </button>
+              )}
+            </div>
+
             <a
               href={project.github}
               target="_blank"
@@ -98,15 +138,28 @@ function FeaturedCard({ project, flipped }) {
             ))}
           </ul>
 
-          <div className="mt-auto flex flex-wrap gap-2">
-            {project.tags.map((tag) => (
-              <span
-                key={tag}
-                className="rounded-full border border-white/10 bg-base-300/60 px-2.5 py-1 font-mono text-[11px] text-slate-300 transition-colors group-hover:border-accent/20"
+          <div className="mt-auto flex flex-wrap items-center justify-between gap-3 pt-2">
+            <div className="flex flex-wrap gap-2">
+              {project.tags.map((tag) => (
+                <span
+                  key={tag}
+                  className="rounded-full border border-white/10 bg-base-300/60 px-2.5 py-1 font-mono text-[11px] text-slate-300 transition-colors group-hover:border-accent/20"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+
+            {hasImages && (
+              <button
+                type="button"
+                onClick={() => onOpenGallery(project)}
+                className="inline-flex items-center gap-2 rounded-lg border border-accent/40 bg-accent/10 px-3.5 py-1.5 font-mono text-xs text-accent transition-all duration-200 hover:bg-accent/25 hover:border-accent hover:shadow-glow focus:outline-none focus:ring-2 focus:ring-accent"
               >
-                {tag}
-              </span>
-            ))}
+                <Images size={13} />
+                <span>View Screenshots</span>
+              </button>
+            )}
           </div>
         </div>
       </div>
@@ -115,7 +168,10 @@ function FeaturedCard({ project, flipped }) {
 }
 
 /* Compact grid card */
-function GridCard({ project }) {
+function GridCard({ project, onOpenGallery }) {
+  const hasImages = hasScreenshots(project.id || project.title);
+  const screenshotCount = getScreenshotCount(project.id || project.title);
+
   return (
     <motion.article
       layout
@@ -145,7 +201,18 @@ function GridCard({ project }) {
           )}
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2">
+          {hasImages && (
+            <button
+              type="button"
+              onClick={() => onOpenGallery(project)}
+              aria-label={`View screenshots for ${project.title}`}
+              className="inline-flex items-center gap-1 rounded-md border border-accent/40 bg-accent/10 px-2 py-1 font-mono text-[11px] text-accent transition-all duration-200 hover:bg-accent/25 hover:border-accent hover:shadow-glow focus:outline-none focus:ring-2 focus:ring-accent"
+            >
+              <Images size={11} />
+              <span>{screenshotCount}</span>
+            </button>
+          )}
           <span className="rounded-md border border-white/10 bg-base-300/70 px-2 py-1 font-mono text-xs text-accent">
             {project.year}
           </span>
@@ -180,16 +247,31 @@ function GridCard({ project }) {
         ))}
       </ul>
 
-      {/* Tech tags */}
-      <div className="relative mt-auto flex flex-wrap gap-2 pt-2">
-        {project.tags.map((tag) => (
-          <span
-            key={tag}
-            className="rounded-full border border-white/10 bg-base-300/60 px-2.5 py-1 font-mono text-[11px] text-slate-300 transition-colors group-hover:border-accent/20"
-          >
-            {tag}
-          </span>
-        ))}
+      {/* Tech tags & action button */}
+      <div className="relative mt-auto flex flex-col gap-3 pt-2">
+        <div className="flex flex-wrap gap-2">
+          {project.tags.map((tag) => (
+            <span
+              key={tag}
+              className="rounded-full border border-white/10 bg-base-300/60 px-2.5 py-1 font-mono text-[11px] text-slate-300 transition-colors group-hover:border-accent/20"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+
+        {hasImages && (
+          <div className="pt-2">
+            <button
+              type="button"
+              onClick={() => onOpenGallery(project)}
+              className="flex w-full items-center justify-center gap-2 rounded-lg border border-accent/40 bg-accent/10 py-2 px-3 font-mono text-xs text-accent transition-all duration-200 hover:bg-accent/20 hover:border-accent hover:shadow-glow focus:outline-none focus:ring-2 focus:ring-accent"
+            >
+              <Images size={13} />
+              <span>View Screenshots ({screenshotCount})</span>
+            </button>
+          </div>
+        )}
       </div>
     </motion.article>
   );
@@ -197,6 +279,8 @@ function GridCard({ project }) {
 
 export default function Projects() {
   const [filter, setFilter] = useState('All');
+  const [activeGalleryProject, setActiveGalleryProject] = useState(null);
+
   const showFeatured = filter === 'All';
   // "All" → featured showcased on top, the rest in the grid.
   // A specific filter → every matching project in the grid.
@@ -253,7 +337,12 @@ export default function Projects() {
               className="mb-6 space-y-6"
             >
               {featuredProjects.map((project, i) => (
-                <FeaturedCard key={project.title} project={project} flipped={i % 2 === 1} />
+                <FeaturedCard
+                  key={project.title}
+                  project={project}
+                  flipped={i % 2 === 1}
+                  onOpenGallery={setActiveGalleryProject}
+                />
               ))}
             </motion.div>
           )}
@@ -263,11 +352,23 @@ export default function Projects() {
         <motion.div layout className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           <AnimatePresence mode="popLayout">
             {visible.map((project) => (
-              <GridCard key={project.title} project={project} />
+              <GridCard
+                key={project.title}
+                project={project}
+                onOpenGallery={setActiveGalleryProject}
+              />
             ))}
           </AnimatePresence>
         </motion.div>
       </div>
+
+      {/* Lightbox / Screenshot Gallery Modal */}
+      <ScreenshotGallery
+        isOpen={Boolean(activeGalleryProject)}
+        project={activeGalleryProject}
+        onClose={() => setActiveGalleryProject(null)}
+      />
     </section>
   );
 }
+
