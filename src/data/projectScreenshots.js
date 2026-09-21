@@ -61,8 +61,51 @@ export const projectScreenshotsConfig = {
     folder: 'tourmateai',
     title: 'TourMateAI — AI Travel Planner',
     images: [
-      // Add screenshot filenames here, e.g.:
-      // 'itinerary-planner.png'
+      {
+        file: 'Screenshot 2026-07-21 201630.png',
+        title: 'TourMateAI Landing & Smart Assistant',
+        caption: 'Modern landing portal highlighting AI travel planning, real-time weather integration, and landmark recognition across Sri Lanka.',
+      },
+      {
+        file: 'Screenshot 2026-07-21 202007.png',
+        title: 'Destination Discovery & Mood Filter',
+        caption: 'Interactive attraction search and category filtering across heritage sites, crescent beaches, hiking trails, and cultural landmarks.',
+      },
+      {
+        file: 'Screenshot 2026-07-21 202231.png',
+        title: 'Attraction Details & Live Weather Forecast',
+        caption: 'Detailed destination overview featuring real-time weather conditions, GPS coordinates, and traveler community reviews.',
+      },
+      {
+        file: 'Screenshot 2026-08-27 124916.png',
+        title: 'AI Multi-Day Itinerary Builder',
+        caption: 'Automated itinerary generator scheduling personalized day-by-day routes, custom stops, and transit times.',
+      },
+      {
+        file: 'Screenshot 2026-08-26 172431.png',
+        title: 'AI Landmark Recognition (Sigiriya Rock Fortress)',
+        caption: 'Computer Vision ML model detecting historical landmarks from user photos with high confidence accuracy.',
+      },
+      {
+        file: 'Screenshot 2026-08-28 131514.png',
+        title: 'Landmark Photo Upload & Identification History',
+        caption: 'Image upload portal supporting drag-and-drop inference alongside historical landmark identification logs.',
+      },
+      {
+        file: 'Screenshot 2026-08-26 173413.png',
+        title: 'Spatial & Nearby Destination Recommendations',
+        caption: 'Intelligent geolocation engine recommending nearby attractions, wildlife parks, and cultural highlights.',
+      },
+      {
+        file: 'Screenshot 2026-07-21 202527.png',
+        title: 'Admin Operations & Attraction Management',
+        caption: 'Centralized administrative portal managing attraction databases, coordinates, user profiles, and itineraries.',
+      },
+      {
+        file: 'Screenshot 2026-07-21 201744.png',
+        title: 'Secure User Authentication (Firebase Auth)',
+        caption: 'User login and session management interface integrated with Firebase Authentication.',
+      },
     ],
   },
 
