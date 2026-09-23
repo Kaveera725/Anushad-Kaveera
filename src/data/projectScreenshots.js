@@ -109,6 +109,24 @@ export const projectScreenshotsConfig = {
     ],
   },
 
+  // Real-Time ChatApp
+  'realtime-chat': {
+    folder: 'realtime-chat',
+    title: 'Real-Time ChatApp',
+    images: [
+      {
+        file: 'Screenshot 2026-01-30 183005.png',
+        title: 'Chat Room — Live Messaging Interface',
+        caption: 'Real-time messaging interface with dynamic chat rooms, active user list, and instant message delivery powered by WebSockets.',
+      },
+      {
+        file: 'Screenshot 2026-01-30 183609.png',
+        title: 'Authentication & Room Selection',
+        caption: 'Secure user authentication flow and room selection UI enabling users to join or create dynamic conversation channels.',
+      },
+    ],
+  },
+
   // Cloud-Native Web Application Platform
   'cloud-native-platform': {
     folder: 'cloud-native-platform',
