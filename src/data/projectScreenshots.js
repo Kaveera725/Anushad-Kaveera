@@ -51,8 +51,51 @@ export const projectScreenshotsConfig = {
     folder: 'hotel-menu-manager',
     title: 'Hotel Menu Manager',
     images: [
-      // Add screenshot filenames here, e.g.:
-      // 'menu-admin.png'
+      {
+        file: 'Screenshot 2026-03-06 122617.png',
+        title: 'User Registration — Delicious Dining',
+        caption: 'Account creation screen for the "Delicious Dining" hotel menu app, supporting Customer and Admin role selection with secure sign-up flow.',
+      },
+      {
+        file: 'Screenshot 2026-03-06 122711.png',
+        title: 'User Sign-In — Delicious Dining',
+        caption: 'Secure login portal for the Hotel Menu Manager, deployed live on AWS EC2, accessible via public IP.',
+      },
+      {
+        file: 'Screenshot 2026-09-24 131335.png',
+        title: 'GitHub Actions CI/CD — Deploy Hotel Menu Manager',
+        caption: '15 GitHub Actions workflow runs automating Docker build, push, and deployment to AWS EC2 — showing successful and iterated pipeline runs.',
+      },
+      {
+        file: 'Screenshot 2026-03-07 183447.png',
+        title: 'AWS EC2 Instances Dashboard',
+        caption: 'AWS EC2 console showing the "hotel-menu-server" instance (t2.nano) running in ap-south-1b alongside other managed workloads — all checks passed.',
+      },
+      {
+        file: 'Screenshot 2026-03-07 000931.png',
+        title: 'AWS CloudWatch — EC2 Resource Health',
+        caption: 'CloudWatch Resource Health view for the hotel-menu-server EC2 instance, displaying CPU utilization trend, network bytes, and disk I/O metrics.',
+      },
+      {
+        file: 'Screenshot 2026-03-06 234057.png',
+        title: 'CloudWatch Metrics — CPU Utilization Graph',
+        caption: 'CloudWatch metric graph for hotel-menu-server showing CPUUtilization over a 1-week window, confirming healthy and stable server performance.',
+      },
+      {
+        file: 'Screenshot 2026-03-06 233345.png',
+        title: 'CloudWatch Metrics — EC2 Per-Instance Metrics',
+        caption: 'AWS CloudWatch per-instance metric browser listing all available metrics for the hotel-menu-server EC2 instance (NetworkPacketsIn, EBSReadBytes, NetworkIn, etc.).',
+      },
+      {
+        file: 'Screenshot 2026-03-06 235432.png',
+        title: 'CloudWatch Logs Insights — Query Interface',
+        caption: 'CloudWatch Logs Insights query interface configured for hotel-menu-server log groups, enabling log analysis and visualizations.',
+      },
+      {
+        file: 'Screenshot 2026-03-06 235609.png',
+        title: 'CloudWatch Logs Insights — Log Group Selector',
+        caption: 'Log group selection dialog in CloudWatch Logs Insights, allowing scoped querying across application log streams for the hotel-menu-server.',
+      },
     ],
   },
 
