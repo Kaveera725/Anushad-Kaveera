@@ -83,7 +83,7 @@ export const about = {
   stats: [
     { value: 10, suffix: '+', label: 'Projects Deployed' },
     { value: 10, suffix: '+', label: 'AWS Services Used' },
-    { value: 15, suffix: '+', label: 'Certifications' },
+    { value: 20, suffix: '+', label: 'Certifications' },
   ],
 };
 
@@ -92,7 +92,7 @@ export const about = {
 export const heroStats = [
   { value: 10, suffix: '+', label: 'Projects Deployed' },
   { value: 10, suffix: '+', label: 'AWS Services' },
-  { value: 15, suffix: '+', label: 'Certifications' },
+  { value: 20, suffix: '+', label: 'Certifications' },
 ];
 
 // ----- Skills -----------------------------------------------------
