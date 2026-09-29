@@ -376,6 +376,7 @@ export const certifications = [
   { issuer: 'Linux Foundation', title: 'Introduction to DevSecOps for Managers',                  code: 'LFS180',   image: '/certs/linux-foundation/lfs180.png'   },
   { issuer: 'Linux Foundation', title: 'Introduction to Serverless on Kubernetes',                 code: 'LFS157',   image: '/certs/linux-foundation/lfs157.png'   },
   { issuer: 'Linux Foundation', title: 'Automating Supply Chain Security: SBOMs and Signatures',   code: 'LFEL1007', image: '/certs/linux-foundation/lfel1007.png' },
+  { issuer: 'Linux Foundation', title: 'Introduction to AI/ML Toolkits with Kubeflow',              code: 'LFS209',   image: '/certs/linux-foundation/lfs209.png'   },
   { issuer: 'AWS', title: 'Getting Started with DevOps on AWS',  image: null },
   { issuer: 'AWS', title: 'Amazon EKS Primer',                   image: '/certs/aws/eks.png'        },
   { issuer: 'AWS', title: 'AWS Fargate Overview',                image: '/certs/aws/fargate.png'    },
