@@ -5,7 +5,7 @@ import SectionHeading from './SectionHeading';
 import ScreenshotGallery from './ScreenshotGallery';
 import ProjectDetailsModal from './ProjectDetailsModal';
 import { projects } from '../data/portfolio';
-import { hasScreenshots, getScreenshotCount } from '../data/projectScreenshots';
+import { hasScreenshots, getScreenshotCount, getPrimaryScreenshot } from '../data/projectScreenshots';
 import { fadeUp, viewportOnce } from '../lib/motion';
 
 const FILTERS = ['All', 'Cloud & IaC', 'Containers', 'Full-Stack', 'Networking', 'Machine Learning (ML)'];
@@ -13,48 +13,95 @@ const FILTERS = ['All', 'Cloud & IaC', 'Containers', 'Full-Stack', 'Networking',
 const featuredProjects = projects.filter((p) => p.featured);
 const gridProjects = projects.filter((p) => !p.featured);
 
-/* Decorative terminal-style mockup panel for featured cards */
+/* Realistic browser/terminal mockup panel showcasing live project screenshots */
 function ProjectMockup({ project, onOpenGallery, hasImages, screenshotCount }) {
+  const cover = hasImages ? getPrimaryScreenshot(project.id || project.title) : null;
+
   return (
     <div
       onClick={hasImages ? () => onOpenGallery(project) : undefined}
-      className={`glass group/mockup relative flex h-full min-h-[220px] items-center justify-center overflow-hidden rounded-xl ${
+      className={`glass group/mockup relative flex h-full min-h-[260px] md:min-h-[320px] items-center justify-center overflow-hidden rounded-xl border border-white/10 transition-all duration-300 hover:border-accent/40 hover:shadow-glass-glow ${
         hasImages ? 'cursor-pointer' : ''
       }`}
     >
-      <div className="grid-bg absolute inset-0 opacity-70" />
+      <div className="grid-bg absolute inset-0 opacity-50" />
       <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-accent/15 blur-3xl" />
       <div className="absolute -bottom-10 -left-10 h-40 w-40 rounded-full bg-brand-purple/15 blur-3xl" />
 
-      {/* Mini terminal chrome */}
-      <div className="card relative w-[85%] overflow-hidden transition-transform duration-300 group-hover/mockup:scale-[1.02]">
-        <div className="flex items-center gap-1.5 border-b border-white/[0.08] bg-base-300/60 px-3 py-2">
-          <span className="h-2 w-2 rounded-full bg-[#ff5f56]" />
-          <span className="h-2 w-2 rounded-full bg-[#ffbd2e]" />
-          <span className="h-2 w-2 rounded-full bg-[#27c93f]" />
-          <span className="ml-2 flex items-center gap-1 font-mono text-[10px] text-slate-500">
-            <Terminal size={10} />
-            {project.year}
-          </span>
-        </div>
-        <div className="flex flex-wrap gap-1.5 p-4">
-          {project.tags.map((tag) => (
-            <span
-              key={tag}
-              className="rounded-md border border-accent/25 bg-accent/5 px-2 py-1 font-mono text-[10px] text-accent"
-            >
-              {tag}
+      {/* Browser / Application Window Frame */}
+      <div className="card relative w-[92%] h-[90%] overflow-hidden flex flex-col transition-transform duration-300 group-hover/mockup:scale-[1.02] border border-white/10 bg-base-200/90 shadow-2xl">
+        {/* Window Chrome Title Bar */}
+        <div className="flex items-center justify-between border-b border-white/[0.08] bg-base-300/80 px-3 py-2 shrink-0">
+          <div className="flex items-center gap-1.5">
+            <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f56]" />
+            <span className="h-2.5 w-2.5 rounded-full bg-[#ffbd2e]" />
+            <span className="h-2.5 w-2.5 rounded-full bg-[#27c93f]" />
+          </div>
+
+          {/* URL / Status bar */}
+          <div className="mx-2 flex max-w-[220px] flex-1 items-center justify-center rounded-md border border-white/5 bg-base-100/70 px-2 py-0.5">
+            <span className="truncate font-mono text-[10px] text-slate-400">
+              {project.id === 'agrisl'
+                ? 'https://agrisl.lk'
+                : project.id === 'argo-cd'
+                ? 'https://argocd.internal'
+                : `https://${project.id}.app`}
             </span>
-          ))}
+          </div>
+
+          <div className="flex items-center gap-1 font-mono text-[10px] text-slate-500">
+            <Terminal size={10} />
+            <span>{project.year}</span>
+          </div>
         </div>
+
+        {/* Window Content: Real Screenshot vs Fallback Terminal */}
+        {cover ? (
+          <div className="relative flex-1 overflow-hidden bg-base-300/50 min-h-[180px]">
+            <img
+              src={cover.src}
+              alt={cover.alt || project.title}
+              loading="lazy"
+              className="h-full w-full object-cover object-top transition-transform duration-500 group-hover/mockup:scale-105"
+            />
+            {/* Subtle bottom gradient shadow */}
+            <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-base-DEFAULT/90 to-transparent" />
+
+            {/* Bottom Caption Pill */}
+            <div className="absolute bottom-2 left-2 right-2 flex items-center justify-between gap-2 px-1">
+              <span className="truncate rounded bg-base-DEFAULT/85 px-2 py-0.5 font-mono text-[10px] text-slate-300 backdrop-blur-sm border border-white/10">
+                {cover.title || 'Live Application UI'}
+              </span>
+              <span className="shrink-0 rounded-full border border-accent/40 bg-accent/20 px-2 py-0.5 font-mono text-[10px] font-semibold text-accent backdrop-blur-sm">
+                1 / {screenshotCount}
+              </span>
+            </div>
+          </div>
+        ) : (
+          <div className="flex flex-1 flex-col justify-center p-5">
+            <div className="flex flex-wrap gap-1.5 mb-3">
+              {project.tags.map((tag) => (
+                <span
+                  key={tag}
+                  className="rounded-md border border-accent/25 bg-accent/5 px-2 py-1 font-mono text-[10px] text-accent"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+            <p className="font-mono text-xs text-slate-400 leading-relaxed">
+              Cloud architecture codified with Terraform & monitored with Prometheus.
+            </p>
+          </div>
+        )}
       </div>
 
-      {/* Click overlay hint if has images */}
+      {/* Hover Overlay Prompt */}
       {hasImages && (
         <div className="absolute inset-0 flex items-center justify-center bg-base-DEFAULT/60 opacity-0 backdrop-blur-[2px] transition-opacity duration-300 group-hover/mockup:opacity-100">
-          <span className="inline-flex items-center gap-2 rounded-full border border-accent/50 bg-base-100/90 px-4 py-2 font-mono text-xs text-accent shadow-glow">
+          <span className="inline-flex items-center gap-2 rounded-full border border-accent/60 bg-base-100/95 px-4 py-2 font-mono text-xs text-accent shadow-glow">
             <Images size={14} />
-            <span>View {screenshotCount} Screenshots</span>
+            <span>Browse All {screenshotCount} Screenshots</span>
           </span>
         </div>
       )}
@@ -197,6 +244,7 @@ function FeaturedCard({ project, flipped, onOpenGallery, onOpenDetails }) {
 function GridCard({ project, onOpenGallery, onOpenDetails }) {
   const hasImages = hasScreenshots(project.id || project.title);
   const screenshotCount = getScreenshotCount(project.id || project.title);
+  const cover = hasImages ? getPrimaryScreenshot(project.id || project.title) : null;
 
   return (
     <motion.article
@@ -214,7 +262,7 @@ function GridCard({ project, onOpenGallery, onOpenDetails }) {
       <div className="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full bg-accent/10 opacity-0 blur-3xl transition-opacity duration-500 group-hover:opacity-100" />
 
       {/* Header */}
-      <div className="relative mb-4 flex items-start justify-between gap-4">
+      <div className="relative mb-3 flex items-start justify-between gap-4">
         <div className="flex items-center gap-3">
           <span className="glass flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border-accent/30 text-accent transition-transform duration-300 group-hover:scale-110">
             <FolderGit2 size={18} />
@@ -264,6 +312,43 @@ function GridCard({ project, onOpenGallery, onOpenDetails }) {
           </a>
         </div>
       </div>
+
+      {/* Real Project Screenshot Banner for Grid Cards */}
+      {cover && (
+        <div
+          onClick={() => onOpenGallery(project)}
+          className="group/thumb relative mb-3.5 aspect-video w-full cursor-pointer overflow-hidden rounded-lg border border-white/10 bg-base-300 transition-all duration-300 hover:border-accent/50 hover:shadow-glow"
+        >
+          <img
+            src={cover.thumbnail || cover.src}
+            alt={cover.alt || project.title}
+            loading="lazy"
+            className="h-full w-full object-cover object-top transition-transform duration-500 group-hover/thumb:scale-105"
+          />
+          {/* Bottom gradient */}
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-10 bg-gradient-to-t from-base-DEFAULT/90 to-transparent" />
+
+          {/* Screenshot counter pill */}
+          <span className="absolute top-2 right-2 rounded-full border border-accent/40 bg-base-DEFAULT/85 px-2 py-0.5 font-mono text-[10px] text-accent backdrop-blur-sm shadow-glow flex items-center gap-1">
+            <Images size={10} />
+            <span>{screenshotCount}</span>
+          </span>
+
+          {/* Hover prompt */}
+          <div className="absolute inset-0 flex items-center justify-center bg-base-DEFAULT/50 opacity-0 backdrop-blur-[1px] transition-opacity group-hover/thumb:opacity-100">
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-accent/60 bg-base-100/90 px-3 py-1 font-mono text-[11px] text-accent shadow-glow">
+              <Images size={12} />
+              <span>View Gallery</span>
+            </span>
+          </div>
+
+          <div className="absolute bottom-1 left-2 right-2 truncate">
+            <span className="font-mono text-[10px] text-slate-300 truncate">
+              {cover.title || project.title}
+            </span>
+          </div>
+        </div>
+      )}
 
       {/* Title */}
       <h3 className="relative mb-3 flex items-start gap-1 font-display text-lg font-bold leading-snug text-slate-50 transition-colors group-hover:text-accent">

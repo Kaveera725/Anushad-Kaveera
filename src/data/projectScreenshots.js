@@ -327,3 +327,11 @@ export function hasScreenshots(projectId) {
 export function getScreenshotCount(projectId) {
   return getProjectScreenshots(projectId).length;
 }
+
+/**
+ * Get the primary (cover) screenshot for a project.
+ */
+export function getPrimaryScreenshot(projectId) {
+  const screenshots = getProjectScreenshots(projectId);
+  return screenshots.length > 0 ? screenshots[0] : null;
+}

@@ -304,9 +304,8 @@ export default function ScreenshotGallery({ isOpen, project, initialIndex = 0, o
                       alt={currentImage.alt}
                       loading="lazy"
                       onLoad={() => setIsLoaded(true)}
-                      className={`max-h-[52vh] sm:max-h-[58vh] max-w-full rounded-lg object-contain shadow-2xl transition-opacity duration-300 ${
-                        isLoaded ? 'opacity-100' : 'opacity-0'
-                      }`}
+                      className={`max-h-[52vh] sm:max-h-[58vh] max-w-full rounded-lg object-contain shadow-2xl transition-opacity duration-300 ${isLoaded ? 'opacity-100' : 'opacity-0'
+                        }`}
                     />
                   </motion.div>
                 </AnimatePresence>
@@ -362,11 +361,10 @@ export default function ScreenshotGallery({ isOpen, project, initialIndex = 0, o
                       type="button"
                       onClick={() => goToIndex(idx)}
                       aria-label={`View screenshot ${idx + 1}: ${img.title}`}
-                      className={`group relative h-14 w-20 sm:h-16 sm:w-24 shrink-0 overflow-hidden rounded-md border transition-all duration-200 focus:outline-none ${
-                        isActive
-                          ? 'border-accent ring-2 ring-accent/50 scale-105 shadow-glow'
-                          : 'border-white/10 opacity-60 hover:opacity-100 hover:border-accent/40'
-                      }`}
+                      className={`group relative h-14 w-20 sm:h-16 sm:w-24 shrink-0 overflow-hidden rounded-md border transition-all duration-200 focus:outline-none ${isActive
+                        ? 'border-accent ring-2 ring-accent/50 scale-105 shadow-glow'
+                        : 'border-white/10 opacity-60 hover:opacity-100 hover:border-accent/40'
+                        }`}
                     >
                       <img
                         src={img.thumbnail || img.src}
@@ -375,11 +373,10 @@ export default function ScreenshotGallery({ isOpen, project, initialIndex = 0, o
                         className="h-full w-full object-cover"
                       />
                       <span
-                        className={`absolute bottom-0 inset-x-0 font-mono text-[10px] text-center py-0.5 font-bold transition-colors ${
-                          isActive
-                            ? 'bg-accent text-base-DEFAULT'
-                            : 'bg-base-DEFAULT/90 text-slate-300'
-                        }`}
+                        className={`absolute bottom-0 inset-x-0 font-mono text-[10px] text-center py-0.5 font-bold transition-colors ${isActive
+                          ? 'bg-accent text-base-DEFAULT'
+                          : 'bg-base-DEFAULT/90 text-slate-300'
+                          }`}
                       >
                         #{idx + 1}
                       </span>
