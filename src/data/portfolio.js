@@ -320,17 +320,93 @@ export const projects = [
   },
   {
     id: 'agrisl',
-    title: 'AgriSL — AI Farming Platform',
+    title: 'AgriSL — Bilingual AI Agricultural Platform',
     year: '2026',
     bullets: [
-      'Bilingual (Sinhala / English) platform with a GPT-4o chatbot and crop disease detection.',
-      'Deployed on GCP: Compute Engine, Cloud SQL, and Cloud Storage.',
-      'Docker + GitHub Actions CI/CD to GCP.',
-      'Nginx, SSL/TLS, JWT auth, and RBAC (Farmer / Officer / Admin).',
+      'Bilingual (Sinhala / English) AI platform overcoming agricultural knowledge barriers for rural Sri Lankan farmers.',
+      'Three-stage disease pipeline: PlantNet plant ID, custom TensorFlow.js MobileNetV2 classifier, and GPT-4o Vision bilingual diagnosis.',
+      'AI chatbot delivering real-time agronomic guidance tailored to user-selected crop and administrative district in Sinhala & English.',
+      'Multi-role RBAC architecture (Farmer, Verified Agricultural Officer, Admin) with document upload and admin credential verification.',
+      'Production security: JWT with rotating refresh tokens, token revocation, bcrypt hashing, Helmet, express-rate-limit, and Nginx reverse proxy.',
+      'End-to-end full-stack: React 18, Vite, Material UI, Node.js Express (MVC), MySQL 8, Multer, PM2, with AWS deployment architecture.',
     ],
-    tags: ['GCP', 'Docker', 'Node.js', 'React', 'MySQL', 'OpenAI API', 'GitHub Actions'],
+    tags: [
+      'React 18',
+      'Node.js',
+      'Express',
+      'MySQL 8',
+      'TensorFlow.js',
+      'GPT-4o Vision',
+      'MobileNetV2',
+      'JWT & RBAC',
+      'Nginx',
+      'AWS Ready',
+    ],
     github: 'https://github.com/Kaveera725',
+    featured: true,
     category: 'Machine Learning (ML)',
+    details: {
+      tagline: 'Bridging agricultural language barriers in Sri Lanka with multimodal AI, computer vision, and expert advisory workflows.',
+      problem:
+        'Most farming research and agricultural advisory in Sri Lanka is published exclusively in English, which fewer than a quarter of rural farmers read comfortably. When facing crop disease outbreaks, farmers lack rapid access to reliable diagnostic tools and treatment protocols in Sinhala, leading to widespread harvest loss and hazardous pesticide misuse.',
+      solution:
+        'AgriSL unites three critical tools in one responsive bilingual (Sinhala / English) platform: an interactive district- and crop-aware AI chatbot, a three-stage computer vision plant disease diagnostic pipeline, and an open expert advisory portal where verified agricultural officers publish peer-reviewed agronomic guidance accessible to all without sign-up.',
+      myRole:
+        'Designed and developed the entire system end-to-end: relational database schema, Express.js REST API (MVC architecture), React 18 frontend with Material UI, JWT authentication with rotating refresh tokens, multi-stage AI/ML inference pipeline, and the MobileNetV2 transfer learning workflow in Python on Google Colab.',
+      keyFeatures: [
+        {
+          title: 'Three-Stage Disease Diagnostic Pipeline',
+          desc: 'Combines PlantNet species identification, a custom TensorFlow.js MobileNetV2 model trained on the PlantVillage dataset, and GPT-4o Vision for final diagnostic synthesis. Generates cause, severity rating, immediate remediation, exact chemical/organic dosages, common mistakes to avoid, and officer consultation criteria in Sinhala and English.',
+        },
+        {
+          title: 'District & Crop-Tailored AI Chatbot',
+          desc: 'Enables farmers to select their cultivated crop and administrative district to ask questions in Sinhala or English, receiving real-time agronomic advice tuned to regional soil types, microclimates, and seasonal pests.',
+        },
+        {
+          title: 'Verified Expert Advisory Portal',
+          desc: 'Agricultural officers author and publish bilingual research-backed articles that anyone can read publicly without registration, complete with reader feedback ratings and article bookmarking.',
+        },
+        {
+          title: 'Multi-Role Role-Based Access Control (RBAC)',
+          desc: 'Tailored portals and dedicated dashboards for Farmers, Agricultural Officers, and Platform Administrators, each with role-specific views and permission boundaries.',
+        },
+        {
+          title: 'Officer Credential Verification Workflow',
+          desc: 'Agricultural officers must upload official identification documents at registration; administrators review documents and approve or reject applications with written reason feedback before publishing rights activate.',
+        },
+        {
+          title: 'Enterprise-Grade Authentication & Hardening',
+          desc: 'Short-lived JWT access tokens with rotating refresh tokens and token revocation, bcrypt password hashing, express-rate-limit protection against brute-force attacks, Helmet security headers, and Multer file upload sanitization.',
+        },
+      ],
+      techStack: [
+        { area: 'Frontend', tools: 'React 18, Vite, Material UI, React Router, Axios, TailwindCSS' },
+        { area: 'Backend', tools: 'Node.js, Express (MVC), Multer, bcryptjs, Helmet, express-rate-limit' },
+        { area: 'Database', tools: 'MySQL 8 (Relational Schema, Foreign Key Constraints, Indexed Queries)' },
+        { area: 'AI & Machine Learning', tools: 'TensorFlow.js (MobileNetV2), GPT-4o Vision API, PlantNet API, Chatbot LLM' },
+        { area: 'Authentication & Security', tools: 'JWT (Access + Rotating Refresh Tokens), Token Revocation Store, RBAC' },
+        { area: 'Cloud & Infrastructure', tools: 'Deployment guide prepared for AWS (EC2, RDS, S3), Nginx Reverse Proxy, PM2' },
+        { area: 'Engineering & Training', tools: 'Python, Google Colab (MobileNetV2 on PlantVillage), Git, GitHub' },
+      ],
+      challenges: [
+        {
+          title: 'Sinhala Language Output Quality',
+          desc: 'Achieving grammatically coherent, technically accurate Sinhala agricultural advice required rigorous prompt engineering, temperature calibration, and strict structured JSON schemas to eliminate hallucinations.',
+        },
+        {
+          title: 'ML Model & LLM Discrepancy Arbitration',
+          desc: 'Architected robust arbitration logic for edge cases where the local MobileNetV2 classifier and multimodal vision LLM disagree, accompanied by graceful fallback paths when offline model weights are unavailable.',
+        },
+        {
+          title: 'Silent Refresh-Token Rotation & Security',
+          desc: 'Engineered silent access token renewal using rotating refresh tokens and one-time revocation to provide a seamless user session while safeguarding against token theft and replay exploits.',
+        },
+        {
+          title: 'Resource-Constrained Model Deployment',
+          desc: 'Kept heavy training checkpoints, large image datasets, and secrets out of version control, streamlining TensorFlow.js model artifacts for smooth inference on standard cloud hosting.',
+        },
+      ],
+    },
   },
   {
     id: 'tourmateai',

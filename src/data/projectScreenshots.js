@@ -38,11 +38,88 @@ export const projectScreenshotsConfig = {
   // AgriSL — AI Farming Platform
   'agrisl': {
     folder: 'agrisl',
-    title: 'AgriSL — AI Farming Platform',
+    title: 'AgriSL — Bilingual AI Agricultural Platform',
     images: [
-      // Add screenshot filenames here, e.g.:
-      // 'dashboard.png',
-      // { file: 'crop-detection.png', title: 'Disease Detection UI', caption: 'AI classification interface' }
+      {
+        file: 'Hero.png',
+        title: '01. AgriSL Landing Page & Agricultural Hub',
+        caption: 'Modern bilingual landing portal highlighting AgriSL’s three-in-one AI platform: crop disease detection, chatbot assistant, and verified expert advisory portal for Sri Lankan farmers.',
+      },
+      {
+        file: 'register.png',
+        title: '02. Multi-Role Registration & Officer Verification Upload',
+        caption: 'Role-based registration interface (Farmer, Officer, Admin) where agricultural officers upload official credentials for admin review and approval before publishing privileges activate.',
+      },
+      {
+        file: 'profile_editor.png',
+        title: '03. User Profile & Security Management',
+        caption: 'Account settings supporting profile photo management, telephone contact updates, and secure password changes across all user roles.',
+      },
+      {
+        file: 'farmer_dashboard.png',
+        title: '04. Farmer Portal & Operations Dashboard',
+        caption: 'Personalized farmer workspace highlighting recent crop disease scans, diagnostic history, saved agronomy articles, weather indicators, and system notifications.',
+      },
+      {
+        file: 'chat.png',
+        title: '05. AI Farming Chatbot — Crop & District Selection',
+        caption: 'Interactive conversational interface enabling farmers to pick their cultivated crop and administrative district to receive real-time, localized agronomic advice.',
+      },
+      {
+        file: 'chatbot.png',
+        title: '06. Bilingual AI Conversational Assistant',
+        caption: 'Bilingual AI chatbot providing contextual farming guidance in Sinhala and English, tailored to regional soil varieties, microclimates, and seasonal pests.',
+      },
+      {
+        file: 'deasese.png',
+        title: '07. Plant Disease Detection Hub',
+        caption: 'Central plant disease detection landing and instructions interface, guiding farmers through capturing and uploading diseased leaf photos.',
+      },
+      {
+        file: 'deasese_detection.png',
+        title: '08. Three-Stage AI Detection & Photo Inference',
+        caption: 'Plant photo upload and inference portal integrating PlantNet species ID, custom TensorFlow.js MobileNetV2 classification, and GPT-4o Vision diagnostic synthesis.',
+      },
+      {
+        file: 'deasese_report.png',
+        title: '09. Bilingual Disease Diagnostic Report & Severity Rating',
+        caption: 'Comprehensive diagnosis in Sinhala and English: identified pathology, severity rating, root causes, immediate actions, exact treatment steps, and officer alert criteria.',
+      },
+      {
+        file: 'deasese_reort_review.png',
+        title: '10. Detailed Treatment Protocols & Chemical Dosages',
+        caption: 'Actionable treatment guide detailing chemical and organic spray ratios, application intervals, preventative cultural practices, and common mistakes to avoid.',
+      },
+      {
+        file: 'officer_dashboard.png',
+        title: '11. Agricultural Officer Command Center',
+        caption: 'Officer command center showing published agronomic articles, reader ratings, pending farmer community queries, and regional crop health trends.',
+      },
+      {
+        file: 'officer_article.png',
+        title: '12. Officer Bilingual Article Publishing Studio',
+        caption: 'Rich article drafting studio allowing verified agricultural officers to author and publish bilingual farming advisories accessible publicly without signup.',
+      },
+      {
+        file: 'officer_report.png',
+        title: '13. Officer Disease Consultation & Field Reports',
+        caption: 'Specialized officer review view to examine escalated crop disease reports from local farmers and provide verified treatment approvals.',
+      },
+      {
+        file: 'admin_dashboard.png',
+        title: '14. Admin Operations & System Control Plane',
+        caption: 'Central administration dashboard for overseeing platform analytics, user accounts, and reviewing uploaded officer credential documents for official accreditation.',
+      },
+      {
+        file: 'admin_article.png',
+        title: '15. Admin Article Moderation & Advisory Oversight',
+        caption: 'Administrative article review queue ensuring published agricultural advisories meet national quality and scientific standards.',
+      },
+      {
+        file: 'admin_disaese_report_level.png',
+        title: '16. Regional Disease Surveillance & Outbreak Analytics',
+        caption: 'Administrative disease monitoring view tracking infection severity levels and outbreak trends across agricultural districts in Sri Lanka.',
+      },
     ],
   },
 

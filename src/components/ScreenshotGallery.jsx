@@ -374,8 +374,14 @@ export default function ScreenshotGallery({ isOpen, project, initialIndex = 0, o
                         loading="lazy"
                         className="h-full w-full object-cover"
                       />
-                      <span className="absolute bottom-0 inset-x-0 bg-base-DEFAULT/80 text-[9px] font-mono text-center text-slate-300 py-0.5">
-                        {idx + 1}
+                      <span
+                        className={`absolute bottom-0 inset-x-0 font-mono text-[10px] text-center py-0.5 font-bold transition-colors ${
+                          isActive
+                            ? 'bg-accent text-base-DEFAULT'
+                            : 'bg-base-DEFAULT/90 text-slate-300'
+                        }`}
+                      >
+                        #{idx + 1}
                       </span>
                     </button>
                   );

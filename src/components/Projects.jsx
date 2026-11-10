@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Github, ArrowUpRight, Star, FolderGit2, Terminal, Images } from 'lucide-react';
+import { Github, ArrowUpRight, Star, FolderGit2, Terminal, Images, BookOpen } from 'lucide-react';
 import SectionHeading from './SectionHeading';
 import ScreenshotGallery from './ScreenshotGallery';
+import ProjectDetailsModal from './ProjectDetailsModal';
 import { projects } from '../data/portfolio';
 import { hasScreenshots, getScreenshotCount } from '../data/projectScreenshots';
 import { fadeUp, viewportOnce } from '../lib/motion';
@@ -62,7 +63,7 @@ function ProjectMockup({ project, onOpenGallery, hasImages, screenshotCount }) {
 }
 
 /* Full-width featured card — image side alternates left/right */
-function FeaturedCard({ project, flipped, onOpenGallery }) {
+function FeaturedCard({ project, flipped, onOpenGallery, onOpenDetails }) {
   const hasImages = hasScreenshots(project.id || project.title);
   const screenshotCount = getScreenshotCount(project.id || project.title);
 
@@ -96,6 +97,18 @@ function FeaturedCard({ project, flipped, onOpenGallery }) {
                 <Star size={11} className="fill-current" />
                 Featured
               </span>
+
+              {project.details && (
+                <button
+                  type="button"
+                  onClick={() => onOpenDetails(project)}
+                  aria-label={`View Case Study for ${project.title}`}
+                  className="inline-flex items-center gap-1.5 rounded-full border border-accent/60 bg-accent/20 px-3 py-1 font-mono text-[11px] text-accent shadow-glow transition-all duration-200 hover:bg-accent/30 hover:border-accent focus:outline-none focus:ring-2 focus:ring-accent"
+                >
+                  <BookOpen size={12} />
+                  <span>Case Study</span>
+                </button>
+              )}
 
               {hasImages && (
                 <button
@@ -150,16 +163,29 @@ function FeaturedCard({ project, flipped, onOpenGallery }) {
               ))}
             </div>
 
-            {hasImages && (
-              <button
-                type="button"
-                onClick={() => onOpenGallery(project)}
-                className="inline-flex items-center gap-2 rounded-lg border border-accent/40 bg-accent/10 px-3.5 py-1.5 font-mono text-xs text-accent transition-all duration-200 hover:bg-accent/25 hover:border-accent hover:shadow-glow focus:outline-none focus:ring-2 focus:ring-accent"
-              >
-                <Images size={13} />
-                <span>View Screenshots</span>
-              </button>
-            )}
+            <div className="flex flex-wrap items-center gap-2">
+              {project.details && (
+                <button
+                  type="button"
+                  onClick={() => onOpenDetails(project)}
+                  className="inline-flex items-center gap-1.5 rounded-lg border border-accent/60 bg-accent/20 px-3.5 py-1.5 font-mono text-xs text-accent shadow-glow transition-all duration-200 hover:bg-accent/30 hover:border-accent focus:outline-none focus:ring-2 focus:ring-accent"
+                >
+                  <BookOpen size={13} />
+                  <span>Case Study</span>
+                </button>
+              )}
+
+              {hasImages && (
+                <button
+                  type="button"
+                  onClick={() => onOpenGallery(project)}
+                  className="inline-flex items-center gap-2 rounded-lg border border-accent/40 bg-accent/10 px-3.5 py-1.5 font-mono text-xs text-accent transition-all duration-200 hover:bg-accent/25 hover:border-accent hover:shadow-glow focus:outline-none focus:ring-2 focus:ring-accent"
+                >
+                  <Images size={13} />
+                  <span>View Screenshots</span>
+                </button>
+              )}
+            </div>
           </div>
         </div>
       </div>
@@ -168,7 +194,7 @@ function FeaturedCard({ project, flipped, onOpenGallery }) {
 }
 
 /* Compact grid card */
-function GridCard({ project, onOpenGallery }) {
+function GridCard({ project, onOpenGallery, onOpenDetails }) {
   const hasImages = hasScreenshots(project.id || project.title);
   const screenshotCount = getScreenshotCount(project.id || project.title);
 
@@ -202,6 +228,17 @@ function GridCard({ project, onOpenGallery }) {
         </div>
 
         <div className="flex items-center gap-2">
+          {project.details && (
+            <button
+              type="button"
+              onClick={() => onOpenDetails(project)}
+              aria-label={`View Case Study for ${project.title}`}
+              className="inline-flex items-center gap-1 rounded-md border border-accent/60 bg-accent/20 px-2 py-1 font-mono text-[11px] text-accent shadow-glow transition-all duration-200 hover:bg-accent/30 hover:border-accent focus:outline-none focus:ring-2 focus:ring-accent"
+            >
+              <BookOpen size={11} />
+              <span>Details</span>
+            </button>
+          )}
           {hasImages && (
             <button
               type="button"
@@ -260,18 +297,29 @@ function GridCard({ project, onOpenGallery }) {
           ))}
         </div>
 
-        {hasImages && (
-          <div className="pt-2">
+        <div className="pt-2 flex items-center gap-2">
+          {project.details && (
+            <button
+              type="button"
+              onClick={() => onOpenDetails(project)}
+              className="flex flex-1 items-center justify-center gap-1.5 rounded-lg border border-accent/60 bg-accent/20 py-2 px-3 font-mono text-xs text-accent shadow-glow transition-all duration-200 hover:bg-accent/30 hover:border-accent focus:outline-none focus:ring-2 focus:ring-accent"
+            >
+              <BookOpen size={13} />
+              <span>Case Study</span>
+            </button>
+          )}
+
+          {hasImages && (
             <button
               type="button"
               onClick={() => onOpenGallery(project)}
-              className="flex w-full items-center justify-center gap-2 rounded-lg border border-accent/40 bg-accent/10 py-2 px-3 font-mono text-xs text-accent transition-all duration-200 hover:bg-accent/20 hover:border-accent hover:shadow-glow focus:outline-none focus:ring-2 focus:ring-accent"
+              className={`flex ${project.details ? 'flex-1' : 'w-full'} items-center justify-center gap-2 rounded-lg border border-accent/40 bg-accent/10 py-2 px-3 font-mono text-xs text-accent transition-all duration-200 hover:bg-accent/20 hover:border-accent hover:shadow-glow focus:outline-none focus:ring-2 focus:ring-accent`}
             >
               <Images size={13} />
-              <span>View Screenshots ({screenshotCount})</span>
+              <span>Screenshots ({screenshotCount})</span>
             </button>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </motion.article>
   );
@@ -280,6 +328,13 @@ function GridCard({ project, onOpenGallery }) {
 export default function Projects() {
   const [filter, setFilter] = useState('All');
   const [activeGalleryProject, setActiveGalleryProject] = useState(null);
+  const [galleryInitialIndex, setGalleryInitialIndex] = useState(0);
+  const [activeDetailsProject, setActiveDetailsProject] = useState(null);
+
+  const handleOpenGallery = (project, index = 0) => {
+    setActiveGalleryProject(project);
+    setGalleryInitialIndex(index);
+  };
 
   const showFeatured = filter === 'All';
   // "All" → featured showcased on top, the rest in the grid.
@@ -341,7 +396,8 @@ export default function Projects() {
                   key={project.title}
                   project={project}
                   flipped={i % 2 === 1}
-                  onOpenGallery={setActiveGalleryProject}
+                  onOpenGallery={handleOpenGallery}
+                  onOpenDetails={setActiveDetailsProject}
                 />
               ))}
             </motion.div>
@@ -355,7 +411,8 @@ export default function Projects() {
               <GridCard
                 key={project.title}
                 project={project}
-                onOpenGallery={setActiveGalleryProject}
+                onOpenGallery={handleOpenGallery}
+                onOpenDetails={setActiveDetailsProject}
               />
             ))}
           </AnimatePresence>
@@ -366,7 +423,16 @@ export default function Projects() {
       <ScreenshotGallery
         isOpen={Boolean(activeGalleryProject)}
         project={activeGalleryProject}
+        initialIndex={galleryInitialIndex}
         onClose={() => setActiveGalleryProject(null)}
+      />
+
+      {/* Project Case Study / Details Modal */}
+      <ProjectDetailsModal
+        isOpen={Boolean(activeDetailsProject)}
+        project={activeDetailsProject}
+        onClose={() => setActiveDetailsProject(null)}
+        onOpenGallery={handleOpenGallery}
       />
     </section>
   );
